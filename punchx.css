@@ -1,0 +1,28 @@
+/*Forum sizing and so on*/
+.frm{
+    position : relative;
+    text-align : center;
+    overflow : hidden;
+    border : solid lightgrey;
+    margin : 0 auto;
+    border-width : 2px;
+    border-radius : 5px;
+    padding : 3%;
+    
+}
+/*To validate the screen size for the form width*/
+@media screen and (max-width : 540px) {
+    .frm {
+        width : 60%;
+    }
+}
+@media screen and (min-width : 540px) {
+    .frm {
+        width : 50%;
+    }
+}
+@media screen and (min-width : 800px) {
+    .frm {
+        width : 320px;
+    }
+}
