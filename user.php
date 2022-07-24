@@ -18,19 +18,20 @@
 
         $row = mysqli_fetch_all($sql,MYSQLI_ASSOC);
 
+        foreach($row as $rows){
+            $rows["status"];
+        } 
+
+
         if(!$row){
             header("Location:login.php");
         }
-        else{   
-            foreach($row as $rows){
-                $rows["status"];
-            } 
+        else{ 
             if($rows["status"] == "in"){
                 $sql=mysqli_multi_query($conn,"update user set status='out' where uid='$uname'");
             }
             else{
                 $sql=mysqli_multi_query($conn,"update user set status='in' where uid='$uname'");
-
             }
 
         }

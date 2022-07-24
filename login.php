@@ -22,22 +22,49 @@ if (isset($_POST['submit'])){
         //validating it
         $upass = md5($upassword);
 
-        $n = rand(9990000,999999999999999);
-        $ck_has = md5($n);
+
+        //checking if hash exists
+        $sql = mysqli_query($conni,"select hash,uid from user where uid='$uid'");
+        $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+        foreach($crow as $crows){
+            $crows["hash"];
+            $crows["uid"];
+        }
+
+        if($crows["hash"]===0){
+            $n = rand(9990000,999999999999999);
+            $ck_has = md5($n);
+        }
+
 
         $sql = mysqli_query($conni,"select * from user where uid='$uname' AND password='$upass'");
-
+ 
         $row = mysqli_fetch_assoc($sql);
 
-        if(!$row){
-            echo "<script>alert('Please enter the correct username and password')</script>"; 
+        if($row){
+
+
+            if($crows["hash"]===0){
+                $sql = mysqli_multi_query($conni,"update user set hash='$ck_has' where uid='$uname'");
+                setcookie("uhash",$ck_has);
+            }
+
+            elseif($crows["hash"]===$ck_has && $crows["uid"]===$uname){
+            }
+            
+            else{
+                echo "<script>alert('Please login from your own device')</script>"; 
+                header("Location:login.php");
+            }
+
+            setcookie("userid",$uname);
+            setcookie("upasswd",$upass);
+            header("Location:user.php");
+
         }
         else{
-                $sql = mysqli_multi_query($conni,"update user set hash='$ck_has',status='$ustatus' where uid='$uname'");
-                setcookie("userid",$uname);
-                setcookie("upasswd",$upass);
-                setcookie("uhash",$ck_has);
-                header("Location:user.php");
+            echo "<script>alert('Please enter the correct username and password')</script>"; 
+
         }
     }
 }
