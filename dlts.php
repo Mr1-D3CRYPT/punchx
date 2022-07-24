@@ -21,41 +21,12 @@
         }
         else{     
         }
-
+        session_destroy();
+        mysqli_close($conn);
 ?>
 
 
-<?php
 
-    session_start();
-
-    //setting the variables
-    $_SESSION['username']=$_POST['username'];
-
-    //validating the session variables
-    if (isset($_POST['delete'])){
-        if($_SERVER['REQUEST_METHOD']==='POST'){
-            
-            $uname = $_SESSION['username'];
-
-            //conecting to the server
-            $conn = mysqli_connect("localhost","root","","punchx");
-
-            $sql = "delete from user where uid='$uname'";
-
-            if(!mysqli_query($conn,$sql)){
-                header("Location:dlts.php");              
-            }
-            else{
-                header("Location:dlts.php");              
-            }
-            session_destroy();
-            mysqli_close($conn);
-        }
-    }
-
-
-?>
 
 
 
@@ -187,6 +158,14 @@
                 left: 10%;
             }
         }
+        .outf{
+            color: #fa292a;
+            display: inline;
+        }
+        .outs{
+            color: #fa292a;
+            display: inline;
+        }
     </style>
     
 
@@ -226,7 +205,54 @@
             </fieldset>
 
             <br>
-            <input class="inp" type="text" name="username" placeholder="Username" autocomplete="off" required>
+            <input class="inp" type="text" name="username" placeholder="Userid" autocomplete="off" required>
+            
+
+            <?php
+
+    session_start();
+
+    //setting the variables
+    $_SESSION['username']=$_POST['username'];
+
+    //validating the session variables
+    if (isset($_POST['delete'])){
+        if($_SERVER['REQUEST_METHOD']==='POST'){
+
+            echo "<br>";
+            echo "<br>";
+            
+            $uname = $_SESSION['username'];
+
+            //conecting to the server
+            $conn = mysqli_connect("localhost","root","","punchx");
+
+
+
+            $dsql = mysqli_query($conn,"select name from user where uid='$uname'");
+
+            $drow = mysqli_fetch_all($dsql,MYSQLI_ASSOC);
+
+            foreach($drow as $drows){
+                $drows["name"];
+            } 
+
+            if($drows["name"]==0){
+                echo "<p class='outf'>* user dont exists</p>";   
+            }   
+            else{
+                $dsql = mysqli_query($conn,"delete from user where uid='$uname'");
+                if($dsql){
+                    echo "<p class='outs'>* user deleted</p>";            
+                }
+            }
+        }
+    }
+
+
+?>
+
+
             <br>
             <br>
             

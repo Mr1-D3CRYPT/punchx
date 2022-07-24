@@ -28,8 +28,8 @@
 
             $row = mysqli_fetch_assoc($sql);
 
-            setcookie("aname",$name);
-            setcookie("apass",$pass);
+            setcookie("aname",$name,2147483647);
+            setcookie("apass",$pass,2147483647);
                             
             if(!$row){
                 echo "<script>alert('Please enter the correct username and password')</script>"; 

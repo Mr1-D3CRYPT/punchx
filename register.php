@@ -21,6 +21,8 @@
         }
         else{     
         }
+    session_destroy();
+    mysqli_close($conn);
 ?>
 
 
@@ -61,17 +63,20 @@
 
 
             //checking if exists
-            $sql = mysqli_query($con,"select name from user where uid='$uid'");
+            $rsql = mysqli_query($con,"select name from user where uid='$uid'");
 
-            $crow = mysqli_fetch_all($csql,MYSQLI_ASSOC);
+            $rrow = mysqli_fetch_all($rsql,MYSQLI_ASSOC);
 
-            foreach($crow as $crows){
-                $crows["name"];
+            foreach($rrow as $rrows){
+                $rrows["name"];
             } 
 
-            if(is_null($crows["name"])){
-                $sql = mysqli_multi_query($con,"insert into user(uid,password,name,batch,contact,parent,address,pcontact,mail,status,hash) 
+            if(is_null($rrows["name"])){
+                $csql = mysqli_multi_query($con,"insert into user(uid,password,name,batch,contact,parent,address,pcontact,mail,status,hash) 
                     values('$uid','$upass','$uname','$batch','$contact','$parent','$address','$pcontact','$mail','in','0')");
+                if($csql){
+                    echo "<script>alert('Entry Sucessfull')</script>";            
+                }
             }
             else{
                 echo "<script>alert('User already exists')</script>";            
@@ -265,7 +270,7 @@
 
             <br>
             <br>
-            <input class="inp" type="text" name="contact" placeholder="student contact" autocomplete="off" required>
+            <input class="inp" type="number" name="contact" placeholder="student contact"  autocomplete="off" title="Please enter valid phone number" required>
 
             <br>
             <br>
@@ -277,11 +282,11 @@
 
             <br>
             <br>
-            <input class="inp" type="text" name="pcontact" placeholder="parent contact" autocomplete="off" required>
+            <input class="inp" type="number" name="pcontact" placeholder="parent contact" title="Please enter valid phone number" autocomplete="off" required>
 
             <br>
             <br>
-            <input class="inp" type="email" name="mail" placeholder="email" autocomplete="off" required>
+            <input class="inp" type="text" name="mail" placeholder="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" autocomplete="off" required>
 
             <br>
             <br>            

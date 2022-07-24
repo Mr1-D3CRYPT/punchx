@@ -125,7 +125,7 @@
         }
         .punch{
             text-decoration: none;
-            color: black;
+            color: red;
         }
     </style>
     
@@ -170,24 +170,38 @@
 
             $result = mysqli_fetch_all($sql,MYSQLI_ASSOC);
 
-            $i=1;
+            $i=0;
 
             if($result){
                 foreach($result as $results){
-                    echo $i .". <a href='details.php' target='_blank' class='punch'>";
-                    printf($results["uid"]);
-                    echo "</a>". "<br>";
                     $i++;
+                    echo $i.". ";
+                    printf($results["uid"]);
+                    echo "<br>";
                 }
+
+                echo "<br>";
+
+                $sql = mysqli_query($con,"select count(uid) as ct from user");
+
+                $resultc = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+                echo $i. " out of ";
+                foreach($resultc as $rst){
+                printf($rst["ct"]);
+                }
+                echo " users are punched out.";
+
+                echo "<br>";
+                echo "<br>";
+                echo "<a href='details.php' target='_blank' class='punch'>* click here show details</a>";
             }
 
             else{
                 echo "Sorry! No user punched out";
             }
-            mysqli_close($con);
         ?>
 
-    </div>
+    </div> 
 
 
     <!--copyright footer-->

@@ -97,7 +97,9 @@
     <br>
     
     <div style="text-align:center">
-        <p>punched 
+        <?php 
+            echo $uname." punched";
+        ?> 
         <?php
             $sql = mysqli_query($conn,"select status from user where uid='$uname'");
             $result = mysqli_fetch_all($sql,MYSQLI_ASSOC); 
@@ -114,11 +116,9 @@
 
             $date->setTimestamp($dateStamp);
 
-            echo $date->format('Y-m-d H:i:s');
+            echo $date->format('H:i:s');
         ?>
 
-
-        </p>
     </div>
 
     <!--copyright footer-->
