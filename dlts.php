@@ -189,7 +189,7 @@
         <a class="navbars" href="punchedout.php">Punched out</a>
         <a class="navbars" href="punchedin.php">Punched in</a>
         <a class="navbars" href="register.php">Register user</a>
-        <a class="navbars" href="dlts.php">Delete user</a>
+        <a class="navbars" href="dlts.php">Delete / New device</a>
     </div>
     <br>
     <br>
