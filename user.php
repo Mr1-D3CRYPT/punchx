@@ -23,7 +23,7 @@
         } 
 
 
-        if(!$row){
+        if(!$rows){
             header("Location:login.php");
         }
         else{ 
@@ -110,13 +110,15 @@
         ?>
          at : 
         <?php
-            $date = new DateTime();
+            if (function_exists('date_default_timezone_set'))
+            {
+            date_default_timezone_set('Asia/Kolkata');
+            }
 
-            $dateStamp = $_SERVER['REQUEST_TIME'];
+            $d = date('h:i:s');
+            echo $d;
 
-            $date->setTimestamp($dateStamp);
-
-            echo $date->format('H:i:s');
+            $sql = mysqli_query($conn,"update user set time='$d' where uid='$uname'");
         ?>
 
     </div>
