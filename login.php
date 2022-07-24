@@ -24,11 +24,10 @@ if (isset($_POST['submit'])){
 
 
         //checking if hash exists
-        $sql = mysqli_query($conni,"select hash,uid from user where uid='$uid'");
+        $sql = mysqli_query($conni,"select hash from user where uid='$uid'");
         $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
         foreach($crow as $crows){
             $crows["hash"];
-            $crows["uid"];
         }
 
         if($crows["hash"]===0){
@@ -47,19 +46,16 @@ if (isset($_POST['submit'])){
             if($crows["hash"]===0){
                 $sql = mysqli_multi_query($conni,"update user set hash='$ck_has' where uid='$uname'");
                 setcookie("uhash",$ck_has);
+                setcookie("userid",$uname);
+                setcookie("upasswd",$upass);
+                header("Location:user.php");
             }
 
-            elseif($crows["hash"]===$ck_has && $crows["uid"]===$uname){
+            elseif($crows["hash"]===$ck_has){
+                setcookie("userid",$uname);
+                setcookie("upasswd",$upass);
+                header("Location:user.php");
             }
-            
-            else{
-                echo "<script>alert('Please login from your own device')</script>"; 
-                header("Location:login.php");
-            }
-
-            setcookie("userid",$uname);
-            setcookie("upasswd",$upass);
-            header("Location:user.php");
 
         }
         else{
