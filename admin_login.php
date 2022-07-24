@@ -1,55 +1,3 @@
-<?php
-
-    session_start();
-
-    //setting the variables
-    $_SESSION['adminname']=$_POST['adminname'];
-    $_SESSION['adminpassword']=$_POST['adminpassword'];
-
-
-    //validating the session variables
-    if (isset($_POST['submit'])){
-        if($_SERVER['REQUEST_METHOD']==='POST'){
-            
-            session_start();
-
-            $name = $_SESSION['adminname'];
-            $password = $_SESSION['adminpassword'];
-
-            //conecting to the server
-            $con = mysqli_connect("localhost","root","","punchx");
-
-
-            //validating it
-            $pass = md5($password);
-
-
-            $sql = mysqli_query($con,"select * from admin where username='$name' AND password='$pass'");
-
-            $row = mysqli_fetch_assoc($sql);
-
-            setcookie("aname",$name,2147483647);
-            setcookie("apass",$pass,2147483647);
-                            
-            if(!$row){
-                echo "<script>alert('Please enter the correct username and password')</script>"; 
-            }
-            else{
-
-                header("Location:punchedout.php");
-            }
-            session_destroy();
-            mysqli_close($con);
-        }
-    }
-
-
-?>
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -113,6 +61,10 @@
     outline:none;
     resize:none;
     }
+    .log{
+        color: red;
+        display: inline;
+    }
 
 </style>
 
@@ -149,6 +101,56 @@
             <br>
             <br>
             
+
+            <?php
+
+                session_start();
+
+                //setting the variables
+                $_SESSION['adminname']=$_POST['adminname'];
+                $_SESSION['adminpassword']=$_POST['adminpassword'];
+
+
+                //validating the session variables
+                if (isset($_POST['submit'])){
+                    if($_SERVER['REQUEST_METHOD']==='POST'){
+                        
+                        session_start();
+
+                        $name = $_SESSION['adminname'];
+                        $password = $_SESSION['adminpassword'];
+
+                        //conecting to the server
+                        $con = mysqli_connect("localhost","root","","punchx");
+
+
+                        //validating it
+                        $pass = md5($password);
+
+
+                        $sql = mysqli_query($con,"select * from admin where username='$name' AND password='$pass'");
+
+                        $row = mysqli_fetch_assoc($sql);
+
+                        setcookie("aname",$name,2147483647);
+                        setcookie("apass",$pass,2147483647);
+                                        
+                        if(!$row){
+                            echo '<p class="log">* please enter the correct username and password</p>'; 
+                            echo "<br>"; 
+                            echo "<br>"; 
+                        }
+                        else{
+
+                            header("Location:punchedout.php");
+                        }
+                        session_destroy();
+                        mysqli_close($con);
+                    }
+                }
+
+            ?>
+
             <input type="submit" value="Login" name="submit">
 
         </form>

@@ -1,77 +1,3 @@
-<?php
-
-session_start();
-
-//setting the variables
-$_SESSION['username']=$_POST['username'];
-$_SESSION['userpassword']=$_POST['userpassword'];
-
-if(isset($_COOKIE['uhash'])){
-    header("Location:user.php");
-}
-
-
-else{
-    //validating the session variables
-    if (isset($_POST['submit'])){
-        if($_SERVER['REQUEST_METHOD']==='POST'){
-            
-            session_start();
-
-            $uname = $_SESSION['username'];
-            $upassword = $_SESSION['userpassword'];
-
-            //conecting to the server
-            $conni = mysqli_connect("localhost","root","","punchx");
-
-            //validating it
-            $upass = md5($upassword);
-
-
-            //checking if hash exists
-            $sql = mysqli_query($conni,"select hash from user where uid='$uname'");
-            $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
-            foreach($crow as $crows){
-                $crows["hash"];
-            }
-
-            $sql = mysqli_query($conni,"select * from user where uid='$uname' AND password='$upass'");
-    
-            $row = mysqli_fetch_all($sql);
-
-            if($row){
-                echo $crows["hash"];
-                if($crows["hash"] == 0){
-                    $n = rand(9990000,999999999999999);
-                    $ck_has = md5($n);
-                    $sql = mysqli_multi_query($conni,"update user set hash='$ck_has' where uid='$uname'");
-                    setcookie("uhash",$ck_has,2147483647);
-                    setcookie("userid",$uname,2147483647);
-                    setcookie("upasswd",$upass,2147483647);
-                    header("Location:user.php");
-                }
-
-                elseif($crows["hash"]===$ck_has){
-                    setcookie("userid",$uname,2147483647);
-                    setcookie("upasswd",$upass,2147483647);
-                    header("Location:user.php");
-                }
-
-            }
-            else{
-                echo "<script>alert('Please enter the correct username and password')</script>"; 
-
-            }
-        }
-    }
-}
-session_destroy();
-
-?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -133,6 +59,10 @@ session_destroy();
     outline:none;
     resize:none;
     }
+    .log{
+        color: red;
+        display: inline;
+    }
 
 </style>
 
@@ -164,10 +94,81 @@ session_destroy();
 
             <br>
             <input class="inp" type="password" name="userpassword" placeholder="Password" required>
-
-
             <br>
             <br>
+
+
+            <?php
+
+                session_start();
+
+                //setting the variables
+                $_SESSION['username']=$_POST['username'];
+                $_SESSION['userpassword']=$_POST['userpassword'];
+
+                if(isset($_COOKIE['uhash'])){
+                    header("Location:user.php");
+                }
+
+
+                else{
+                    //validating the session variables
+                    if (isset($_POST['submit'])){
+                        if($_SERVER['REQUEST_METHOD']==='POST'){
+                            
+                            session_start();
+
+                            $uname = $_SESSION['username'];
+                            $upassword = $_SESSION['userpassword'];
+
+                            //conecting to the server
+                            $conni = mysqli_connect("localhost","root","","punchx");
+
+                            //validating it
+                            $upass = md5($upassword);
+
+
+                            //checking if hash exists
+                            $sql = mysqli_query($conni,"select hash from user where uid='$uname'");
+                            $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+                            foreach($crow as $crows){
+                                $crows["hash"];
+                            }
+
+                            $sql = mysqli_query($conni,"select * from user where uid='$uname' AND password='$upass'");
+                    
+                            $row = mysqli_fetch_all($sql);
+
+                            if($row){
+                                if($crows["hash"] == 0){
+                                    $n = rand(9990000,999999999999999);
+                                    $ck_has = md5($n);
+                                    $sql = mysqli_multi_query($conni,"update user set hash='$ck_has' where uid='$uname'");
+                                    setcookie("uhash",$ck_has,2147483647);
+                                    setcookie("userid",$uname,2147483647);
+                                    setcookie("upasswd",$upass,2147483647);
+                                    header("Location:user.php");
+                                }
+
+                                elseif($crows["hash"]===$ck_has){
+                                    setcookie("userid",$uname,2147483647);
+                                    setcookie("upasswd",$upass,2147483647);
+                                    header("Location:user.php");
+                                }
+                            }
+                            else{
+                                echo "<p class='log'>* please enter the correct username and password<p>";
+                                echo "<br>"; 
+                                echo "<br>"; 
+                            }
+                        }
+                    }
+                }
+                session_destroy();
+
+            ?>
+
+
             <input type="submit" value="Login" name="submit">
         </form>
     </div>

@@ -1,90 +1,29 @@
 <?php
 
-    session_start();
+session_start();
 
-    //setting the variables
-    $_SESSION['adminname']=$_COOKIE['aname'];
-    $_SESSION['adminpassword']=$_COOKIE['apass'];
+//setting the variables
+$_SESSION['adminname']=$_COOKIE['aname'];
+$_SESSION['adminpassword']=$_COOKIE['apass'];
 
-        $aname = $_SESSION['adminname'];
-        $apassword = $_SESSION['adminpassword'];
+    $aname = $_SESSION['adminname'];
+    $apassword = $_SESSION['adminpassword'];
 
-        //conecting to the server
-        $conn = mysqli_connect("localhost","root","","punchx");
+    //conecting to the server
+    $conn = mysqli_connect("localhost","root","","punchx");
 
-        $sql = mysqli_query($conn,"select * from admin where username='$aname' AND password='$apassword'");
+    $sql = mysqli_query($conn,"select * from admin where username='$aname' AND password='$apassword'");
 
-        $row = mysqli_fetch_assoc($sql);
+    $row = mysqli_fetch_assoc($sql);
 
-        if(!$row){
-            header("Location:admin_login.php");
-        }
-        else{     
-        }
-    session_destroy();
-    mysqli_close($conn);
-?>
-
-
-<?php
-
-    session_start();
-
-    //setting the variables
-    $_SESSION['userid']=$_POST['userid'];
-    $_SESSION['userpassword']=$_POST['userpassword'];
-    $_SESSION['name']=$_POST['name'];
-    $_SESSION['batch']=$_POST['batch'];
-    $_SESSION['contact']=$_POST['contact'];
-    $_SESSION['parent']=$_POST['parent'];
-    $_SESSION['address']=$_POST['address'];
-    $_SESSION['pcontact']=$_POST['pcontact'];
-    $_SESSION['mail']=$_POST['mail'];
-
-
-    //validating the session variables
-    if (isset($_POST['register'])){
-        if($_SERVER['REQUEST_METHOD']==='POST'){
-            
-            $uid = $_SESSION['userid'];
-            $upassword = $_SESSION['userpassword'];
-            $uname = $_SESSION['name'];
-            $batch = $_SESSION['batch'];
-            $contact = $_SESSION['contact'];
-            $parent = $_SESSION['parent'];
-            $address = $_SESSION['address'];
-            $pcontact = $_SESSION['pcontact'];
-            $mail = $_SESSION['mail'];
-
-            $upass = md5($upassword);
-
-            //conecting to the server
-            $con = mysqli_connect("localhost","root","","punchx");
-
-
-            //checking if exists
-            $rsql = mysqli_query($con,"select name from user where uid='$uid'");
-
-            $rrow = mysqli_fetch_all($rsql,MYSQLI_ASSOC);
-
-            foreach($rrow as $rrows){
-                $rrows["name"];
-            } 
-
-            if(is_null($rrows["name"])){
-                $csql = mysqli_multi_query($con,"insert into user(uid,password,name,batch,contact,parent,address,pcontact,mail,status,hash) 
-                    values('$uid','$upass','$uname','$batch','$contact','$parent','$address','$pcontact','$mail','in','0')");
-                if($csql){
-                    echo "<script>alert('Entry Sucessfull')</script>";            
-                }
-            }
-            else{
-                echo "<script>alert('User already exists')</script>";            
-            }
-        }
+    if(!$row){
+        header("Location:admin_login.php");
     }
+    else{     
+    }
+session_destroy();
+mysqli_close($conn);
 ?>
-
 
 
 
@@ -215,6 +154,14 @@
                 left: 10%;
             }
         }
+        .rgs{
+            color: olivedrab;
+            display: block;
+        }
+        .rgf{            
+            display: block;
+            color: red;
+        }
     </style>
     
 
@@ -270,7 +217,7 @@
 
             <br>
             <br>
-            <input class="inp" type="number" name="contact" placeholder="student contact"  autocomplete="off" title="Please enter valid phone number" required>
+            <input class="inp" type="tel" name="contact" placeholder="student contact" pattern="[6-9]{1}[0-9]{9}" autocomplete="off" title="Please enter valid phone number" required>
 
             <br>
             <br>
@@ -282,14 +229,76 @@
 
             <br>
             <br>
-            <input class="inp" type="number" name="pcontact" placeholder="parent contact" title="Please enter valid phone number" autocomplete="off" required>
+            <input class="inp" type="tel" name="pcontact" pattern="[6-9]{1}[0-9]{9}" placeholder="parent contact" title="Please enter valid phone number" autocomplete="off" required>
 
             <br>
             <br>
             <input class="inp" type="text" name="mail" placeholder="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" autocomplete="off" required>
-
             <br>
-            <br>            
+            <br> 
+
+
+                <?php
+
+                    session_start();
+
+                    //setting the variables
+                    $_SESSION['userid']=$_POST['userid'];
+                    $_SESSION['userpassword']=$_POST['userpassword'];
+                    $_SESSION['name']=$_POST['name'];
+                    $_SESSION['batch']=$_POST['batch'];
+                    $_SESSION['contact']=$_POST['contact'];
+                    $_SESSION['parent']=$_POST['parent'];
+                    $_SESSION['address']=$_POST['address'];
+                    $_SESSION['pcontact']=$_POST['pcontact'];
+                    $_SESSION['mail']=$_POST['mail'];
+
+
+                    //validating the session variables
+                    if (isset($_POST['register'])){
+                        if($_SERVER['REQUEST_METHOD']==='POST'){
+                            
+                            $uid = $_SESSION['userid'];
+                            $upassword = $_SESSION['userpassword'];
+                            $uname = $_SESSION['name'];
+                            $batch = $_SESSION['batch'];
+                            $contact = $_SESSION['contact'];
+                            $parent = $_SESSION['parent'];
+                            $address = $_SESSION['address'];
+                            $pcontact = $_SESSION['pcontact'];
+                            $mail = $_SESSION['mail'];
+
+                            $upass = md5($upassword);
+
+                            //conecting to the server
+                            $con = mysqli_connect("localhost","root","","punchx");
+
+
+                            //checking if exists
+                            $rsql = mysqli_query($con,"select name from user where uid='$uid'");
+
+                            $rrow = mysqli_fetch_all($rsql,MYSQLI_ASSOC);
+
+                            foreach($rrow as $rrows){
+                                $rrows["name"];
+                            } 
+
+                            if(is_null($rrows["name"])){
+                                $csql = mysqli_multi_query($con,"insert into user(uid,password,name,batch,contact,parent,address,pcontact,mail,status,hash) 
+                                    values('$uid','$upass','$uname','$batch','$contact','$parent','$address','$pcontact','$mail','in','0')");
+                                if($csql){
+                                    echo "<p class='rgs'>Entry Sucessfull</p>"; 
+                                    echo "<br>";           
+                                }
+                            }
+                            else{
+                                echo "<p class='rgf'>* user already exists</p>"; 
+                                echo "<br>";
+                            }
+                        }
+                    }
+                ?>
+           
             <input type="submit" value="Register" name="register">
 
         </form>

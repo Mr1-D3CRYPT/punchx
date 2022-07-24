@@ -159,7 +159,7 @@
             }
         }
         .outf{
-            color: #fa292a;
+            color: olivedrab;
             display: inline;
         }
         .outs{
