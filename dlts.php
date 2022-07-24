@@ -210,56 +210,100 @@
 
             <?php
 
-    session_start();
+                    session_start();
 
-    //setting the variables
-    $_SESSION['username']=$_POST['username'];
+                    //setting the variables
+                    $_SESSION['username']=$_POST['username'];
 
-    //validating the session variables
-    if (isset($_POST['delete'])){
-        if($_SERVER['REQUEST_METHOD']==='POST'){
+                    //validating the session variables
+                    if (isset($_POST['delete'])){
+                        if($_SERVER['REQUEST_METHOD']==='POST'){
 
-            echo "<br>";
-            echo "<br>";
-            
-            $uname = $_SESSION['username'];
+                            echo "<br>";
+                            echo "<br>";
+                            
+                            $uname = $_SESSION['username'];
 
-            //conecting to the server
-            $conn = mysqli_connect("localhost","root","","punchx");
-
-
-
-            $dsql = mysqli_query($conn,"select name from user where uid='$uname'");
-
-            $drow = mysqli_fetch_all($dsql,MYSQLI_ASSOC);
-
-            foreach($drow as $drows){
-                $drows["name"];
-            } 
-
-            if($drows["name"]==0){
-                echo "<p class='outf'>* user dont exists</p>";   
-            }   
-            else{
-                $dsql = mysqli_query($conn,"delete from user where uid='$uname'");
-                if($dsql){
-                    echo "<p class='outs'>* user deleted</p>";            
-                }
-            }
-        }
-    }
+                            //conecting to the server
+                            $conn = mysqli_connect("localhost","root","","punchx");
 
 
-?>
+
+                            $dsql = mysqli_query($conn,"select name from user where uid='$uname'");
+
+                            $drow = mysqli_fetch_all($dsql,MYSQLI_ASSOC);
+
+                            foreach($drow as $drows){
+                                $drows["name"];
+                            } 
+
+                            if($drows["name"]==0){
+                                echo "<p class='outf'>* user dont exists</p>";   
+                            }   
+                            else{
+                                $dsql = mysqli_query($conn,"delete from user where uid='$uname'");
+                                if($dsql){
+                                    echo "<p class='outs'>* user deleted</p>";            
+                                }
+                            }
+                        }
+                    }
+                    if (isset($_POST['rereg'])){
+                        if($_SERVER['REQUEST_METHOD']==='POST'){
+
+                            echo "<br>";
+                            echo "<br>";
+                            
+                            $uname = $_SESSION['username'];
+
+                            //conecting to the server
+                            $conn = mysqli_connect("localhost","root","","punchx");
+
+                            $dsql = mysqli_query($conn,"select name from user where uid='$uname'");
+
+                            $drow = mysqli_fetch_all($dsql,MYSQLI_ASSOC);
+
+                            foreach($drow as $drows){
+                                $drows["name"];
+                            } 
+
+                            if($drows["name"]==0){
+                                echo "<p class='outs'>* user dont exists</p>";   
+                            }   
+                            else{
+         
+                                $dsql = mysqli_query($conn,"update user set hash='0' where uid='$uname'");
+
+                                $dsql = mysqli_query($conn,"select hash from user where uid='$uname'");
+
+                                $slr = mysqli_fetch_all($dsql,MYSQLI_ASSOC);
+
+                                foreach($slr as $slrs){
+                                    $slrs["hash"];
+                                }
+
+                                if($slrs["hash"]==0){
+                                    echo "<p class='outf'>Re-registered</p>";   
+                                }   
+                            }
+                        }
+                    }
+            ?>
 
 
             <br>
             <br>
             
             <input type="submit" value="Delete" name="delete">
+            <input type="submit" value="Reregister" name="rereg">
+
+            <br>
+            <br>
+            <p>* select delete user to delete the user and Reregister to allow login from a new device</p>
 
         </form>
     </div>
+
 
 
     <!--copyright footer-->
