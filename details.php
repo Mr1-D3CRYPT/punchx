@@ -85,7 +85,7 @@
                 else{     
                 }
 
-                $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail from user where status='$st'");
+                $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st'");
                 $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
 
                 foreach($crow as $crows){
@@ -111,6 +111,9 @@
                 echo "<br>";
 
                 echo "<pre>E-mail         : </pre>".$crows["mail"];
+                echo "<br>";
+
+                echo "<pre>Time           : </pre>".$crows["time"];
                 echo "<br>";
                 echo "<br>";
                 }
