@@ -125,6 +125,10 @@
                 left: 10%;
             }
         }
+        .punch{
+            text-decoration: none;
+            color: black;
+        }
     </style>
     
 
@@ -162,21 +166,26 @@
             //conecting to the server
             $con = mysqli_connect("localhost","root","","punchx");
 
+            setcookie("sta","in");
+
 
             $sql = mysqli_query($con,"select uid from user where status='in'");
 
             $result = mysqli_fetch_all($sql,MYSQLI_ASSOC);
 
+            $i=1;
+
             if($result){
                 foreach($result as $results){
-                    echo "<a href='details.php' target='_blank'>";
+                    echo $i .". <a href='details.php' target='_blank' class='punch'>";
                     printf($results["uid"]);
                     echo "</a>". "<br>";
+                    $i++;
                 }
             }
             
             else{
-                echo "No user punched in";
+                echo "Sorry! No user punched in";
             }
             mysqli_close($con);
         ?>

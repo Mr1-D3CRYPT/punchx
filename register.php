@@ -61,7 +61,7 @@
 
 
             //checking if exists
-            $csql = mysqli_query($con,"select name from user where uid='$uid'");
+            $sql = mysqli_query($con,"select name from user where uid='$uid'");
 
             $crow = mysqli_fetch_all($csql,MYSQLI_ASSOC);
 
@@ -70,13 +70,12 @@
             } 
 
             if(is_null($crows["name"])){
-            $csql = mysqli_multi_query($con,"insert into user(uid,password,name,batch,contact,parent,address,pcontact,mail) 
-                values('$uid','$upass','$uname','$batch','$contact','$parent','$address','$pcontact','$mail')");
+                $sql = mysqli_multi_query($con,"insert into user(uid,password,name,batch,contact,parent,address,pcontact,mail,status,hash) 
+                    values('$uid','$upass','$uname','$batch','$contact','$parent','$address','$pcontact','$mail','in','0')");
             }
             else{
                 echo "<script>alert('User already exists')</script>";            
             }
-            mysqli_close($con);
         }
     }
 ?>

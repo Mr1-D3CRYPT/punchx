@@ -123,6 +123,10 @@
                 left: 10%;
             }
         }
+        .punch{
+            text-decoration: none;
+            color: black;
+        }
     </style>
     
 
@@ -150,31 +154,35 @@
     </div>
     <br>
     <br>
+    <br>
     
-    <div>
+    <div style="margin-left:20%">
        
        <?php
 
             //conecting to the server
             $con = mysqli_connect("localhost","root","","punchx");
 
+            setcookie("sta","out");
+
 
             $sql = mysqli_query($con,"select uid from user where status='out'");
 
             $result = mysqli_fetch_all($sql,MYSQLI_ASSOC);
 
-            $ar[] = (array) null;
+            $i=1;
 
             if($result){
                 foreach($result as $results){
-                    array_push($ar,$results['uid']);
-                    echo $results["uid"];
-                    echo " ";
+                    echo $i .". <a href='details.php' target='_blank' class='punch'>";
+                    printf($results["uid"]);
+                    echo "</a>". "<br>";
+                    $i++;
                 }
             }
 
             else{
-                echo "No user punched out";
+                echo "Sorry! No user punched out";
             }
             mysqli_close($con);
         ?>
