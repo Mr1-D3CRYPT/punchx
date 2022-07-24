@@ -1,40 +1,62 @@
 <?php
 
+if(isset($_COOKIE['uhash'])){
     session_start();
+
+    $conn = mysqli_connect("localhost","root","","punchx");
 
     //setting the variables
     $_SESSION['username']=$_COOKIE['userid'];
     $_SESSION['userpassword']=$_COOKIE['upasswd'];
+
+    $uname = $_SESSION['username'];
+    $upassword = $_SESSION['userpassword'];
+
+    $sql = mysqli_query($conn,"select hash from user where uid='$uname'");
+
+    $hrow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+
+    foreach($hrow as $hrows){
+        $hrows["hash"];
+    } 
+
+    if($hrows["hash"]==0){
+        $h = rand(9990000,999999999999999);
+        $ck_hash = md5($n);
+        unset($_COOKIE["uhash"]);
+        setcookie("uhash",$ck_hash,2147483647);
+        $sql = mysqli_query($conn,"update user set hash='$ck_hash' where uid='$uname'");
+    }
+
     $_SESSION['hash']=$_COOKIE['uhash'];
+    $uhsh = $_SESSION['hash'];
+    
 
-        $uname = $_SESSION['username'];
-        $upassword = $_SESSION['userpassword'];
-        $uhsh = $_SESSION['hash'];
+    //conecting to the server     
+    $sql = mysqli_query($conn,"select * from user where uid='$uname' AND password='$upassword' AND hash='$uhsh'");
 
-        //conecting to the server
-        $conn = mysqli_connect("localhost","root","","punchx");
+    $row = mysqli_fetch_all($sql,MYSQLI_ASSOC);
 
-        $sql = mysqli_query($conn,"select * from user where uid='$uname' AND password='$upassword' AND hash='$uhsh'");
-
-        $row = mysqli_fetch_all($sql,MYSQLI_ASSOC);
-
-        foreach($row as $rows){
-            $rows["status"];
-        } 
+    foreach($row as $rows){
+        $rows["status"];
+    } 
 
 
-        if(!$rows){
-            header("Location:login.php");
+    if(!$rows){
+        header("Location:login.php");
+    }
+    else{ 
+        if($rows["status"] == "in"){
+            $sql=mysqli_multi_query($conn,"update user set status='out' where uid='$uname'");
         }
-        else{ 
-            if($rows["status"] == "in"){
-                $sql=mysqli_multi_query($conn,"update user set status='out' where uid='$uname'");
-            }
-            else{
-                $sql=mysqli_multi_query($conn,"update user set status='in' where uid='$uname'");
-            }
-
+        else{
+            $sql=mysqli_multi_query($conn,"update user set status='in' where uid='$uname'");
         }
+    }
+}
+else{   
+    header("Location:login.php");
+}
 
 ?>
 
