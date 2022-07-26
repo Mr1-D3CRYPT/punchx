@@ -103,6 +103,9 @@ else{
             background-color : #fbfbfb;
             color : black
         }
+        .lnk{
+            text-decoration: none;
+        }
     </style>
     
 
@@ -141,9 +144,21 @@ else{
             echo $d;
 
             $sql = mysqli_query($conn,"update user set time='$d' where uid='$uname'");
+               
+            $file_name = "notif.mp3";
+                echo '<audio autoplay="true" style="display:none;">
+                    <source src="'.$file_name.'">
+                    </audio>';
         ?>
 
+
+    <br>
+    <br>
+    <p>Your action will be performed automatically. If not <a href="user.php" class="lnk">click here</a></p>
+
     </div>
+
+
 
     <!--copyright footer-->
     <div>

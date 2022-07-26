@@ -155,17 +155,18 @@
                                     setcookie("upasswd",$upass,2147483647);
                                     header("Location:user.php");
                                 }
+                                else{
+                                    echo "<p class='log'>* please login from your own device. Contact your admin if the problem still continues.<p>";
+                                    echo "<br>"; 
+                                }
                             }
                             else{
                                 echo "<p class='log'>* please enter the correct username and password<p>";
-                                echo "<br>"; 
                                 echo "<br>"; 
                             }
                         }
                     }
                 }
-                session_destroy();
-
             ?>
 
 

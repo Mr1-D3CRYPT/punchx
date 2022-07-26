@@ -217,7 +217,7 @@ mysqli_close($conn);
 
             <br>
             <br>
-            <input class="inp" type="tel" name="contact" placeholder="student contact" pattern="[6-9]{1}[0-9]{8}" autocomplete="off" title="Please enter valid phone number" required>
+            <input class="inp" type="tel" name="contact" placeholder="student contact" pattern="[6-9]{1}[0-9]{9}" autocomplete="off" title="Please enter valid phone number" required>
 
             <br>
             <br>
@@ -229,7 +229,7 @@ mysqli_close($conn);
 
             <br>
             <br>
-            <input class="inp" type="tel" name="pcontact" pattern="[6-9]{1}[0-9]{8}" placeholder="parent contact" title="Please enter valid phone number" autocomplete="off" required>
+            <input class="inp" type="tel" name="pcontact" pattern="[6-9]{1}[0-9]{9}" placeholder="parent contact" title="Please enter valid phone number" autocomplete="off" required>
 
             <br>
             <br>
