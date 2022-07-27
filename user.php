@@ -93,10 +93,10 @@ else{
             text-align:center;
         }
         .head1{
-        font-family : 'Alegreya Sans SC';
-        font-size : 300%;
-        background-color : #fbfbfb;
-        color :black;
+            font-family : 'Alegreya Sans SC';
+            font-size : 300%;
+            background-color : #fbfbfb;
+            color :black;
         }
         .head2{
             font-family : 'Great Vibes';
