@@ -151,13 +151,22 @@ else{
         <?php
             if (function_exists('date_default_timezone_set'))
             {
-            date_default_timezone_set('Asia/Kolkata');
+                date_default_timezone_set('Asia/Kolkata');
             }
 
-            $d = date('h:i:s');
-            echo $d;
+            $t = date('h:i:s a');
+            echo $t;
 
-            $sql = mysqli_query($conn,"update user set time='$d' where uid='$uname'");
+            $a = date('a');  
+            $b = date('i:s');
+            
+            $d = date('Y-m-d');            
+
+            if($a == 'pm'){
+                $ti = 12+$t.':'.$b;
+            }
+
+            $sql = mysqli_query($conn,"update user set time='$ti',date='$d' where uid='$uname'");
                
             $file_name = "notif.mp3";
                 echo '<audio autoplay="true" style="display:none;">

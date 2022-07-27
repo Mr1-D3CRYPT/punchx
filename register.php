@@ -213,7 +213,22 @@ mysqli_close($conn);
 
             <br>
             <br>
-            <input class="inp" type="text" name="batch" placeholder="batch name" autocomplete="off" required>
+            <!--<input class="inp" type="text" name="batch" placeholder="batch name" autocomplete="off" required>-->
+            Batch : 
+            <select name="batch" class="inp">
+                <option value="BCA">BCA</option>
+                <option value="BBA">BBA</option>
+                <option value="Bcom">Bcom</option>
+                <option value="Economics">Economics</option>
+                <option value="Physics">Physics</option>
+                <option value="BACE">BACE</option>
+                <option value="Maths">Maths</option>
+                <option value="BSW">BSW</option>
+                <option value="MCA">MCA</option>
+                <option value="Mcom">Mcom</option>
+                <option value="MBA">MBA</option>
+                <option value="MSW">MSW</option>
+            </select>
 
             <br>
             <br>
