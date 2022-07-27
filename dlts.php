@@ -294,8 +294,8 @@
             <br>
             <br>
             
-            <input type="submit" value="Delete" name="delete">
             <input type="submit" value="Reregister" name="rereg">
+            <input type="submit" value="Delete user" name="delete">
 
             <br>
             <br>

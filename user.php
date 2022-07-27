@@ -106,6 +106,12 @@ else{
         .lnk{
             text-decoration: none;
         }
+        .clro{
+            color: red;
+        }
+        .clri{
+            color: green;
+        }
     </style>
     
 
@@ -122,17 +128,25 @@ else{
     <br>
     
     <div style="text-align:center">
-        <?php 
-            echo $uname." punched";
-        ?> 
         <?php
             $sql = mysqli_query($conn,"select status from user where uid='$uname'");
             $result = mysqli_fetch_all($sql,MYSQLI_ASSOC); 
 
             foreach($result as $results){
-                echo $results["status"];
+                 $results["status"];
+            }
+            if($results["status"]=="in"){
+                echo '<p class="clri">';
+            }
+            else{
+                echo '<p class="clro">';
             }
         ?>
+        <?php 
+            echo $uname." punched ";
+            echo $results["status"];
+        ?> 
+
          at : 
         <?php
             if (function_exists('date_default_timezone_set'))
@@ -150,9 +164,8 @@ else{
                     <source src="'.$file_name.'">
                     </audio>';
         ?>
+    </p>
 
-
-    <br>
     <br>
     <p>Your action will be performed automatically. If not <a href="user.php" class="lnk">click here</a></p>
 
