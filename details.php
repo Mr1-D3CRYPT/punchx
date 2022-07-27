@@ -429,14 +429,16 @@
                         echo "<br>";
                     }
             } 
+            if(!$crow){
+                echo "<p style='color:red'>Sorry! No users present</p>";
+            }
+            else{
+                echo "<br>";
+                echo  '<p style="color:red;">Click Ctrl+P to print the page</p>';
+
+            }
         ?>
 
-    </div>
-
-    <br><br>
-
-    <div>
-        <p style="color:red;text-align:center">click Ctrl+P to print the page</p>
     </div>
 
 </body>

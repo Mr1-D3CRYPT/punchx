@@ -103,7 +103,6 @@
             background-color : #fbfbfb;
             color : black
         }
-
         .navbar{
             margin-bottom: 0;
             position: absolute;
@@ -186,10 +185,10 @@
 
     <!--Menu bar-->
     <div class="navbar">
-        <a class="navbars" href="punchedout.php">Punched out</a>
-        <a class="navbars" href="punchedin.php">Punched in</a>
-        <a class="navbars" href="register.php">Register user</a>
-        <a class="navbars" href="dlts.php">Delete / New device</a>
+        <a class="navbars" href="punchedout.php" >Punched out</a>
+        <a class="navbars" href="punchedin.php" >Punched in</a>
+        <a class="navbars" href="register.php" >Register user</a>
+        <a class="navbars" href="dlts.php" >Delete / New device</a>
     </div>
     <br>
     <br>
