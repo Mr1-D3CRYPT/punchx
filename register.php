@@ -303,12 +303,12 @@ mysqli_close($conn);
                                     values('$uid','$upass','$uname','$batch','$contact','$parent','$address','$pcontact','$mail','in','0')");
                                 if($csql){
                                     echo "<p class='rgs'>Entry Sucessfull</p>"; 
+                                    $rsql = mysqli_query($con,"create table IF NOT EXISTS $uid(id int primary key AUTO_INCREMENT,status varchar(10),crdate date, crtime time)");
                                     echo "<br>";           
                                 }
                             }
                             else{
                                 echo "<p class='rgf'>* user already exists</p>"; 
-                                echo "<br>";
                             }
                         }
                     }

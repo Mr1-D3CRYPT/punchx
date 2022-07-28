@@ -133,7 +133,7 @@ else{
             $result = mysqli_fetch_all($sql,MYSQLI_ASSOC); 
 
             foreach($result as $results){
-                 $results["status"];
+                $s = $results["status"];
             }
             if($results["status"]=="in"){
                 echo '<p class="clri">';
@@ -141,14 +141,11 @@ else{
             else{
                 echo '<p class="clro">';
             }
-        ?>
-        <?php 
+
             echo $uname." punched ";
             echo $results["status"];
-        ?> 
-
-         at : 
-        <?php
+            echo " at : ";
+    
             if (function_exists('date_default_timezone_set'))
             {
                 date_default_timezone_set('Asia/Kolkata');
@@ -161,17 +158,22 @@ else{
             $b = date('i:s');
             
             $d = date('Y-m-d');            
-
+            
             if($a == 'pm'){
                 $ti = 12+$t.':'.$b;
             }
-
+            else{
+                $ti = date('h:i:s');
+            }
+    
             $sql = mysqli_query($conn,"update user set time='$ti',date='$d' where uid='$uname'");
+            $sql = mysqli_query($conn,"insert into $uname(status,crdate,crtime) values('$s','$d','$ti')");
+
                
             $file_name = "notif.mp3";
                 echo '<audio autoplay="true" style="display:none;">
                     <source src="'.$file_name.'">
-                    </audio>';
+                    </audio>';            
         ?>
     </p>
 

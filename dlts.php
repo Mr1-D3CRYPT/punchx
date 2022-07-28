@@ -242,7 +242,8 @@
                             else{
                                 $dsql = mysqli_query($conn,"delete from user where uid='$uname'");
                                 if($dsql){
-                                    echo "<p class='outs'>* user deleted</p>";            
+                                    echo "<p class='outs'>* user deleted</p>";  
+                                    $dsql = mysqli_query($conn,"drop table $uname");
                                 }
                             }
                         }
