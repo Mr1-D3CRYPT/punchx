@@ -49,6 +49,14 @@
             margin: 20px;
             margin-left: 20px;
         }
+        .btn{
+            border: none;
+            color: red;
+        }
+        .alg{
+            margin-left: 10px;
+        }
+
     </style>
     
 
@@ -108,6 +116,23 @@
             <hr>
 
         </div>
+
+
+                <!--for the download-->
+        <div class="container">
+            
+            <form action="" method="POST">
+                
+                View student log :
+                <input type="text" name="dwnlid" autocomplete="off">
+                <input type="submit" name="dwnl" value="View">
+                <br>
+                <input type="submit" name="all" class="btn" value="* click here view all students logs">
+            
+            </form>
+            
+            <hr>
+        </div>
         
 
 
@@ -120,8 +145,7 @@
     
         <?php
 
-
-            date_default_timezone_set('Asia/Kolkata');
+             date_default_timezone_set('Asia/Kolkata');
             $d = date('Y-m-d');  
             $t = date('h:ma'); 
             if($t< '17:30'){
@@ -155,98 +179,168 @@
                 else{     
                 }
 
-            
 
-            //for each filters
-            if(isset($_POST['batch']) && !empty($_POST['batch']) && empty($_POST['time'])){
-                if(isset($_POST['apply'])){
+            //view for all option    
+            if(isset($_POST['all']) && !isset($_POST['dwnl'])){
+                $sql = mysqli_query($conn,"select uid from user");
+                $allp = mysqli_fetch_all($sql,MYSQLI_ASSOC);
 
-                    $dept=$_POST['batch'];
-     
-                        $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st' AND batch='$dept'");
-                        $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+                foreach($allp as $allps){
+                    $val = $allps['uid'];
+                    $sql = mysqli_query($conn,"select id,status,crdate,crtime from $val");
+                    $alld = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+                    echo $val." : ";
+                    echo "<br>";
+                    echo "<p class='alg'>";
+                    foreach($alld as $allds){
+                        echo $allds['id'];
+                        echo ". punched ";
+                        echo $allds['status'];
+                        echo " on ";
+                        echo $allds['crdate'];
+                        echo " at ";
+                        echo $allds['crtime'];
+                        echo "<br>";
+                        echo "<br>";
+                    }
+                    echo "</p>";
                 }
             }
 
+            //view for one user
+            elseif(isset($_POST['dwnl']) && !empty($_POST['dwnlid'])){
+                $vid = $_POST['dwnlid'];
+                $sql = mysqli_query($conn,"select * from user where uid='$vid'");
+                $chk = mysqli_fetch_assoc($sql);
 
+                if($chk){
+                    $sql = mysqli_query($conn,"select id,status,crdate,crtime from $vid");
+                    $alld = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+                    if($sql){
 
-            elseif(isset($_POST['time']) && empty($_POST['batch'])) {
-                    if(isset($_POST['apply'])){
-        
-                            $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st' AND date='$d' AND time>'$time'");
-                            $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
-                    }             
-                
+                        echo $vid." : ";
+                        echo "<br>";
+                        echo "<p class='alg'>";
+                        foreach($alld as $allds){
+                                echo $allds['id'];
+                                echo ". punched ";
+                                echo $allds['status'];
+                                echo " on ";
+                                echo $allds['crdate'];
+                                echo " at ";
+                                echo $allds['crtime'];
+                                echo "<br>";
+                                echo "<br>";
+                        }
+                        echo  '<p style="color:red;">Click Ctrl+P to print the page</p>';
+                    }
+                }
+
+                else{
+                    echo "<span class='btn'> * user don't exists</span>";
+                }
+
             }
 
+            //view if user id field empty
+            elseif(isset($_POST['dwnl']) && empty($_POST['dwnlid'])){
+                    echo "<span class='btn'>Please enter an userid !!!</span>";
+            }
+    
+
+            else{
+                //for each filters
+                if(isset($_POST['batch']) && !empty($_POST['batch']) && empty($_POST['time'])){
+                    if(isset($_POST['apply'])){
+
+                        $dept=$_POST['batch'];
+        
+                            $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st' AND batch='$dept'");
+                            $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+                    }
+                }
 
 
-            elseif(isset($_POST['batch']) && !empty($_POST['batch'])){
-                    if(isset($_POST['time'])){
+
+                elseif(isset($_POST['time']) && empty($_POST['batch'])) {
                         if(isset($_POST['apply'])){
-
-                            $dept=$_POST['batch'];
-          
-                                $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st' AND batch='$dept' AND date='$d' AND time>'$time'");
+            
+                                $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st' AND date='$d' AND time>'$time'");
                                 $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
-                        }
-                    } 
+                        }             
+                    
+                }
+
+
+
+                elseif(isset($_POST['batch']) && !empty($_POST['batch'])){
+                        if(isset($_POST['time'])){
+                            if(isset($_POST['apply'])){
+
+                                $dept=$_POST['batch'];
+            
+                                    $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st' AND batch='$dept' AND date='$d' AND time>'$time'");
+                                    $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+                            }
+                        } 
+                }
+                
+
+                elseif(isset($_POST['clear'])){
+
+                        $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st'");
+                        $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);                  
+                }
+
+                else{
+                        $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st'");
+                        $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+                } 
+
+
+
+                if(!$crow){
+                    echo "<p style='color:red'>Sorry! No users present</p>";
+                }
+                else{
+
+                    foreach($crow as $crows){
+                        echo "<pre>User ID        : </pre>".$crows["uid"];
+                        echo "<br>";
+
+                        echo "<pre>Name           : </pre>".$crows["name"];
+                        echo "<br>";
+
+                        echo "<pre>Deptartment    : </pre>".$crows["batch"];   
+                        echo "<br>";
+
+                        echo "<pre>Contact        : </pre>".$crows["contact"];
+                        echo "<br>";
+
+                        echo "<pre>Parent         : </pre>".$crows["parent"];
+                        echo "<br>";
+
+                        echo "<pre>Address        : </pre>".$crows["address"];
+                        echo "<br>";
+
+                        echo "<pre>Parent Contact : </pre>".$crows["pcontact"];
+                        echo "<br>";
+
+                        echo "<pre>E-mail         : </pre>".$crows["mail"];
+                        echo "<br>";
+
+                        echo "<pre>Time           : </pre>".$crows["time"];
+                        echo "<br>";
+                        echo "<br>";
+                    }      
+
+                    echo "<br>";
+                    echo  '<p style="color:red;">Click Ctrl+P to print the page</p>';
+                }
             }
             
-
-            elseif(isset($_POST['clear'])){
-
-                    $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st'");
-                    $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);                  
-            }
-
-            else{
-                    $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st'");
-                    $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
-            } 
-
-
-
-            if(!$crow){
-                echo "<p style='color:red'>Sorry! No users present</p>";
-            }
-            else{
-
-                foreach($crow as $crows){
-                    echo "<pre>User ID        : </pre>".$crows["uid"];
-                    echo "<br>";
-
-                    echo "<pre>Name           : </pre>".$crows["name"];
-                    echo "<br>";
-
-                    echo "<pre>Deptartment    : </pre>".$crows["batch"];   
-                    echo "<br>";
-
-                    echo "<pre>Contact        : </pre>".$crows["contact"];
-                    echo "<br>";
-
-                    echo "<pre>Parent         : </pre>".$crows["parent"];
-                    echo "<br>";
-
-                    echo "<pre>Address        : </pre>".$crows["address"];
-                    echo "<br>";
-
-                    echo "<pre>Parent Contact : </pre>".$crows["pcontact"];
-                    echo "<br>";
-
-                    echo "<pre>E-mail         : </pre>".$crows["mail"];
-                    echo "<br>";
-
-                    echo "<pre>Time           : </pre>".$crows["time"];
-                    echo "<br>";
-                    echo "<br>";
-                }      
-
-                echo "<br>";
-                echo  '<p style="color:red;">Click Ctrl+P to print the page</p>';
-            }
-
         ?>
+
 
     </div>
 
