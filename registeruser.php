@@ -1,62 +1,36 @@
 <?php
 
-if(isset($_COOKIE['uhash'])){
-    session_start();
 
-    $conn = mysqli_connect("localhost","root","","punchx");
+ob_start();
+    if(isset($_COOKIE['uhash'])){
+        session_start();
 
-    //setting the variables
-    $_SESSION['username']=$_COOKIE['userid'];
-    $_SESSION['userpassword']=$_COOKIE['upasswd'];
+        $conn = mysqli_connect("localhost","root","","punchx");
 
-    $uname = $_SESSION['username'];
-    $upassword = $_SESSION['userpassword'];
+        //setting the variables
+        $_SESSION['username']=$_COOKIE['userid'];
+        $_SESSION['userpassword']=$_COOKIE['upasswd'];
 
-    $sql = mysqli_query($conn,"select hash from user where uid='$uname'");
+        $uname = $_SESSION['username'];
+        $upassword = $_SESSION['userpassword'];
 
-    $hrow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+        $sql = mysqli_query($conn,"select hash from user where uid='$uname'");
 
-    foreach($hrow as $hrows){
-        $hrows["hash"];
-    } 
+        $hrow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
 
-    if($hrows["hash"]==0){
-        $h = rand(9990000,999999999999999);
-        $ck_hash = md5($n);
-        unset($_COOKIE["uhash"]);
-        setcookie("uhash",$ck_hash,2147483647);
-        $sql = mysqli_query($conn,"update user set hash='$ck_hash' where uid='$uname'");
+        foreach($hrow as $hrows){
+            $hrows['hash'];
+        }
+
+        if($hrows['hash']=='0'){
+            header("Location:login.php");
+        }
+        else{ 
+        }
     }
-
-    $_SESSION['hash']=$_COOKIE['uhash'];
-    $uhsh = $_SESSION['hash'];
-    
-
-    //conecting to the server     
-    $sql = mysqli_query($conn,"select * from user where uid='$uname' AND password='$upassword' AND hash='$uhsh'");
-
-    $row = mysqli_fetch_all($sql,MYSQLI_ASSOC);
-
-    foreach($row as $rows){
-        $rows["status"];
-    } 
-
-
-    if(!$rows){
+    else{   
         header("Location:login.php");
     }
-    else{ 
-        if($rows["status"] == "in"){
-            $sql=mysqli_multi_query($conn,"update user set status='out' where uid='$uname'");
-        }
-        else{
-            $sql=mysqli_multi_query($conn,"update user set status='in' where uid='$uname'");
-        }
-    }
-}
-else{   
-    header("Location:login.php");
-}
 
 ?>
 
@@ -148,8 +122,8 @@ else{
     ?>
 
         <form action="" method="POST">
-            <input class="inp" type="text" name="fname" placeholder="First Name" autocomplete="off" required>
-            <input class="inp" type="text" name="lname" placeholder="Last Name" autocomplete="off" required>
+            <input class="inp" type="text" name="fname" pattern="[a-zA-Z]{1,}" placeholder="First Name" autocomplete="off" required>
+            <input class="inp" type="text" name="lname" pattern="[a-zA-Z]{1,}" placeholder="Last Name" autocomplete="off" required>
 
             <br>
             <br>
@@ -172,23 +146,23 @@ else{
 
             <br>
             <br>
-            <input class="inp" type="tel" name="contact" placeholder="student contact" pattern="[6-9]{1}[0-9]{9}" autocomplete="off" title="Please enter valid phone number" required>
+            <input class="inp" type="tel" name="contact" placeholder="student contact" pattern="[6-9]{1}[0-9]{9}" autocomplete="off" title="Please enter a valid phone number" required>
 
             <br>
             <br>
-            <input class="inp" type="text" name="parent" placeholder="parent name" autocomplete="off" required>
+            <input class="inp" type="text" name="parent" pattern="[a-zA-Z]{1,}" placeholder="parent name" autocomplete="off" required>
 
             <br>
             <br>
-            <input class="inp" type="text" name="hname" placeholder="House Name" autocomplete="off" required>
+            <input class="inp" type="text" name="hname" pattern="[a-zA-Z]{1,}" placeholder="House Name" autocomplete="off" required>
 
             <br>
             <br>
-            <input class="inp" type="text" name="village" placeholder="Village" autocomplete="off" required>
+            <input class="inp" type="text" name="village" pattern="[a-zA-Z]{1,}" placeholder="Village" autocomplete="off" required>
         
             <br>
             <br>
-            <input class="inp" type="text" name="city" placeholder="City" autocomplete="off" required>
+            <input class="inp" type="text" name="city" pattern="[a-zA-Z]{1,}" placeholder="City" autocomplete="off" required>
 
             <br>
             <br>
@@ -227,18 +201,27 @@ else{
             $pcontact=$_POST['pcontact'];
             $mail=$_POST['mail'];
 
-            $uname;
             $sql = mysqli_query($conn,"update user set fname='$firstname',lname='$lastname',batch='$batch',
-            parent='$parent',house='$hname',village='$village',city='$city',
+            contact='$contact',parent='$parent',house='$hname',village='$village',city='$city',
             pin='$pin',pcontact='$pcontact',mail='$mail' where uid='$uname'");
-            $upd = mysqli_fetch_assoc($sql);
-            if($upd){
-                header("Location:login.php");
+            
+            $sql = mysqli_query($conn,"select fname from user where uid='$uname'");
+            $upd = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+
+            foreach($upd as $rgnms){
+                $rgns=$rgnms['fname'];
             }
-            else{
+            if($rgns==0){
                 echo "Opps !!!";
             }
+            else{
+                echo "your page should redirect automatically !! Else <a href='user.php'>click here</a>";
+                header("Location:user.php");
+                exit();
+            }
+            session_destroy();
         }
+
 
     ?>
 

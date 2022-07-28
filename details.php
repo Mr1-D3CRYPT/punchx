@@ -99,13 +99,9 @@
                 <input type="checkbox" name="time"> Sort users after 5:30</input>
                 <?php
                     date_default_timezone_set('Asia/Kolkata');
-                    $ti = date('h:ma'); 
-                    if($ti > '17:30'){
-                        echo " pm";
-                    }
-                    else{
-                        echo " am";
-                    }
+                    $ti = date('a');
+                    echo $ti; 
+
                 ?>
 
                 <br>
@@ -147,8 +143,8 @@
 
              date_default_timezone_set('Asia/Kolkata');
             $d = date('Y-m-d');  
-            $t = date('h:ma'); 
-            if($t< '17:30'){
+            $t = date('a'); 
+            if($t == 'am'){
                 $time = "5:30:00";
             }
             else{
@@ -179,6 +175,7 @@
                 }
                 else{     
                 }
+
 
 
             //view for all logs option    
@@ -258,7 +255,7 @@
 
                         $dept=$_POST['batch'];
         
-                            $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st' AND batch='$dept'");
+                            $sql = mysqli_query($conn,"select uid,fname,lname,batch,contact,parent,house,village,city,pin,pcontact,mail,time from user where status='$st' AND batch='$dept'");
                             $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
                     }
                 }
@@ -268,7 +265,7 @@
                 elseif(isset($_POST['time']) && empty($_POST['batch'])) {
                         if(isset($_POST['apply'])){
             
-                                $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st' AND date='$d' AND time>'$time'");
+                                $sql = mysqli_query($conn,"select uid,fname,lname,batch,contact,parent,house,village,city,pin,pcontact,mail,time from user where status='$st' AND date='$d' AND time>'$time'");
                                 $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
                         }             
                     
@@ -282,7 +279,7 @@
 
                                 $dept=$_POST['batch'];
             
-                                    $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st' AND batch='$dept' AND date='$d' AND time>'$time'");
+                                    $sql = mysqli_query($conn,"select uid,fname,lname,batch,contact,parent,house,village,city,pin,pcontact,mail,time from user where status='$st' AND batch='$dept' AND date='$d' AND time>'$time'");
                                     $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
                             }
                         } 
@@ -291,12 +288,12 @@
 
                 elseif(isset($_POST['clear'])){
 
-                        $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st'");
+                        $sql = mysqli_query($conn,"select uid,fname,lname,batch,contact,parent,house,village,city,pin,pcontact,mail,time from user where status='$st'");
                         $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);                  
                 }
 
                 else{
-                        $sql = mysqli_query($conn,"select uid,password,name,batch,contact,parent,address,pcontact,mail,time from user where status='$st'");
+                        $sql = mysqli_query($conn,"select uid,fname,lname,batch,contact,parent,house,village,city,pin,pcontact,mail,time from user where status='$st'");
                         $crow = mysqli_fetch_all($sql,MYSQLI_ASSOC);
                 } 
 
@@ -314,7 +311,7 @@
                         echo "<pre>User ID        : </pre>".$crows["uid"];
                         echo "<br>";
 
-                        echo "<pre>Name           : </pre>".$crows["name"];
+                        echo "<pre>Name           : </pre>".$crows["fname"]." ".$crows["lname"];
                         echo "<br>";
 
                         echo "<pre>Deptartment    : </pre>".$crows["batch"];   
@@ -326,7 +323,7 @@
                         echo "<pre>Parent         : </pre>".$crows["parent"];
                         echo "<br>";
 
-                        echo "<pre>Address        : </pre>".$crows["address"];
+                        echo "<pre>Address        : </pre>".$crows["house"].", ".$crows["village"].", ".$crows["city"].", ".$crows["pin"];
                         echo "<br>";
 
                         echo "<pre>Parent Contact : </pre>".$crows["pcontact"];
