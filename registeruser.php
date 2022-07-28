@@ -1,7 +1,6 @@
 <?php
 
 
-ob_start();
     if(isset($_COOKIE['uhash'])){
         session_start();
 
