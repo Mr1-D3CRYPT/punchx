@@ -166,6 +166,7 @@
                 $apassword = $_SESSION['adminpassword'];
                 $st = $_SESSION["stat"];
 
+
                 //conecting to the server
                 $conn = mysqli_connect("localhost","root","","punchx");
 
@@ -180,7 +181,7 @@
                 }
 
 
-            //view for all option    
+            //view for all logs option    
             if(isset($_POST['all']) && !isset($_POST['dwnl'])){
                 $sql = mysqli_query($conn,"select uid from user");
                 $allp = mysqli_fetch_all($sql,MYSQLI_ASSOC);
@@ -205,6 +206,8 @@
                     }
                     echo "</p>";
                 }
+                echo  '<p style="color:red;">Click Ctrl+P to print the page</p>';
+
             }
 
             //view for one user
@@ -303,6 +306,9 @@
                     echo "<p style='color:red'>Sorry! No users present</p>";
                 }
                 else{
+
+                    echo "<h3>Punched ".$st."</h3>";
+
 
                     foreach($crow as $crows){
                         echo "<pre>User ID        : </pre>".$crows["uid"];
