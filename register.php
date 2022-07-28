@@ -205,7 +205,7 @@ mysqli_close($conn);
             
             <br>
             <br>
-            <input class="inp" type="password" name="userpassword" placeholder="Password" autocomplete="off" required>
+            <input class="inp" type="text" name="userpassword" placeholder="Password" autocomplete="off" required>
             
             <br>
             <br>

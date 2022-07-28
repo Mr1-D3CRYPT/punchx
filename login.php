@@ -93,7 +93,7 @@
             <br>
 
             <br>
-            <input class="inp" type="password" name="userpassword" placeholder="Password" required>
+            <input class="inp" type="text" name="userpassword" placeholder="Password" required>
             <br>
             <br>
 
@@ -147,13 +147,13 @@
                                     setcookie("uhash",$ck_has,2147483647);
                                     setcookie("userid",$uname,2147483647);
                                     setcookie("upasswd",$upass,2147483647);
-                                    header("Location:user.php");
+                                    header("Location:registeruser.php");
                                 }
 
                                 elseif($crows["hash"]===$ck_has){
                                     setcookie("userid",$uname,2147483647);
                                     setcookie("upasswd",$upass,2147483647);
-                                    header("Location:user.php");
+                                    header("Location:registeruser.php");
                                 }
                                 else{
                                     echo "<p class='log'>* please login from your own device. Contact your admin if the problem still continues.<p>";

@@ -257,7 +257,6 @@
                             $uname = $_SESSION['username'];
 
                             //conecting to the server
-                            $conn = mysqli_connect("localhost","root","","punchx");
 
                             $dsql = mysqli_query($conn,"select name from user where uid='$uname'");
 
