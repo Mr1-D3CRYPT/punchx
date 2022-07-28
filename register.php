@@ -22,7 +22,6 @@ $_SESSION['adminpassword']=$_COOKIE['apass'];
     else{     
     }
 session_destroy();
-mysqli_close($conn);
 ?>
 
 
@@ -201,109 +200,40 @@ mysqli_close($conn);
             </fieldset>
 
             <br>
-            <input class="inp" type="text" name="userid" placeholder="Userid" autocomplete="off" required>
+            <input class="inp" type="text" name="userid" pattern="(?=.*[a-z]).{1,}" placeholder="Userid" autocomplete="off" title="Must contain atleast one character" required>
             
             <br>
             <br>
             <input class="inp" type="text" name="userpassword" placeholder="Password" autocomplete="off" required>
-            
             <br>
             <br>
-            <input class="inp" type="text" name="name" placeholder="Name" autocomplete="off" required>
-
-            <br>
-            <br>
-            <!--<input class="inp" type="text" name="batch" placeholder="batch name" autocomplete="off" required>-->
-            Batch : 
-            <select name="batch" class="inp">
-                <option value="BCA">BCA</option>
-                <option value="BBA">BBA</option>
-                <option value="Bcom">Bcom</option>
-                <option value="Economics">Economics</option>
-                <option value="Physics">Physics</option>
-                <option value="BACE">BACE</option>
-                <option value="Maths">Maths</option>
-                <option value="BSW">BSW</option>
-                <option value="MCA">MCA</option>
-                <option value="Mcom">Mcom</option>
-                <option value="MBA">MBA</option>
-                <option value="MSW">MSW</option>
-            </select>
-
-            <br>
-            <br>
-            <input class="inp" type="tel" name="contact" placeholder="student contact" pattern="[6-9]{1}[0-9]{9}" autocomplete="off" title="Please enter valid phone number" required>
-
-            <br>
-            <br>
-            <input class="inp" type="text" name="parent" placeholder="parent name" autocomplete="off" required>
-
-            <br>
-            <br>
-            <input class="inp" type="text" name="address" placeholder="address" autocomplete="off" required>
-
-            <br>
-            <br>
-            <input class="inp" type="tel" name="pcontact" pattern="[6-9]{1}[0-9]{9}" placeholder="parent contact" title="Please enter valid phone number" autocomplete="off" required>
-
-            <br>
-            <br>
-            <input class="inp" type="text" name="mail" placeholder="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" autocomplete="off" required>
-            <br>
-            <br> 
-
 
                 <?php
 
-                    session_start();
-
-                    //setting the variables
-                    $_SESSION['userid']=$_POST['userid'];
-                    $_SESSION['userpassword']=$_POST['userpassword'];
-                    $_SESSION['name']=$_POST['name'];
-                    $_SESSION['batch']=$_POST['batch'];
-                    $_SESSION['contact']=$_POST['contact'];
-                    $_SESSION['parent']=$_POST['parent'];
-                    $_SESSION['address']=$_POST['address'];
-                    $_SESSION['pcontact']=$_POST['pcontact'];
-                    $_SESSION['mail']=$_POST['mail'];
-
-
                     //validating the session variables
-                    if (isset($_POST['register'])){
+                    if (isset($_POST['register']) && isset($_POST['userid']) && isset($_POST['userid']) ){
                         if($_SERVER['REQUEST_METHOD']==='POST'){
                             
-                            $uid = $_SESSION['userid'];
-                            $upassword = $_SESSION['userpassword'];
-                            $uname = $_SESSION['name'];
-                            $batch = $_SESSION['batch'];
-                            $contact = $_SESSION['contact'];
-                            $parent = $_SESSION['parent'];
-                            $address = $_SESSION['address'];
-                            $pcontact = $_SESSION['pcontact'];
-                            $mail = $_SESSION['mail'];
+                            $uid = $_POST['userid'];
+                            $upassword = $_POST['userpassword'];
 
                             $upass = md5($upassword);
 
                             //conecting to the server
-                            $con = mysqli_connect("localhost","root","","punchx");
 
 
                             //checking if exists
-                            $rsql = mysqli_query($con,"select name from user where uid='$uid'");
+                            $sql = mysqli_query($conn,"select fname from user where uid='$uid'");
 
-                            $rrow = mysqli_fetch_all($rsql,MYSQLI_ASSOC);
+                            $rrow = mysqli_fetch_assoc($sql);
 
-                            foreach($rrow as $rrows){
-                                $rrows["name"];
-                            } 
 
-                            if(is_null($rrows["name"])){
-                                $csql = mysqli_multi_query($con,"insert into user(uid,password,name,batch,contact,parent,address,pcontact,mail,status,hash) 
-                                    values('$uid','$upass','$uname','$batch','$contact','$parent','$address','$pcontact','$mail','in','0')");
-                                if($csql){
+
+                            if(!$rrow){
+                                $sql = mysqli_query($conn,"insert into user(uid,password) values('$uid','$upass')");
+                                if($sql){
                                     echo "<p class='rgs'>Entry Sucessfull</p>"; 
-                                    $rsql = mysqli_query($con,"create table IF NOT EXISTS $uid(id int primary key AUTO_INCREMENT,status varchar(10),crdate date, crtime time)");
+                                    $sql = mysqli_query($conn,"create table IF NOT EXISTS $uid(id int primary key AUTO_INCREMENT,status varchar(10),crdate date, crtime time)");
                                     echo "<br>";           
                                 }
                             }
@@ -314,6 +244,7 @@ mysqli_close($conn);
                     }
                 ?>
            
+        
             <input type="submit" value="Register" name="register">
 
         </form>

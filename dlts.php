@@ -22,7 +22,6 @@
         else{     
         }
         session_destroy();
-        mysqli_close($conn);
 ?>
 
 
@@ -223,27 +222,19 @@
                             
                             $uname = $_SESSION['username'];
 
-                            //conecting to the server
-                            $conn = mysqli_connect("localhost","root","","punchx");
 
+                            $sql = mysqli_query($conn,"select * from user where uid='$uname'");
 
+                            $drow = mysqli_fetch_assoc($sql);
 
-                            $dsql = mysqli_query($conn,"select name from user where uid='$uname'");
-
-                            $drow = mysqli_fetch_all($dsql,MYSQLI_ASSOC);
-
-                            foreach($drow as $drows){
-                                $drows["name"];
-                            } 
-
-                            if($drows["name"]==0){
+                            if(!$drow){
                                 echo "<p class='outf'>* user dont exists</p>";   
                             }   
                             else{
-                                $dsql = mysqli_query($conn,"delete from user where uid='$uname'");
-                                if($dsql){
+                                $sql = mysqli_query($conn,"delete from user where uid='$uname'");
+                                if($sql){
                                     echo "<p class='outs'>* user deleted</p>";  
-                                    $dsql = mysqli_query($conn,"drop table $uname");
+                                    $sql = mysqli_query($conn,"drop table $uname");
                                 }
                             }
                         }
@@ -258,24 +249,21 @@
 
                             //conecting to the server
 
-                            $dsql = mysqli_query($conn,"select name from user where uid='$uname'");
+                            $sql = mysqli_query($conn,"select * from user where uid='$uname'");
 
-                            $drow = mysqli_fetch_all($dsql,MYSQLI_ASSOC);
+                            $drow = mysqli_fetch_assoc($sql);
 
-                            foreach($drow as $drows){
-                                $drows["name"];
-                            } 
 
-                            if($drows["name"]==0){
+                            if(!$drow){
                                 echo "<p class='outs'>* user dont exists</p>";   
                             }   
                             else{
          
-                                $dsql = mysqli_query($conn,"update user set hash='0' where uid='$uname'");
+                                $sql = mysqli_query($conn,"update user set hash='0' where uid='$uname'");
 
-                                $dsql = mysqli_query($conn,"select hash from user where uid='$uname'");
+                                $sql = mysqli_query($conn,"select hash from user where uid='$uname'");
 
-                                $slr = mysqli_fetch_all($dsql,MYSQLI_ASSOC);
+                                $slr = mysqli_fetch_all($sql,MYSQLI_ASSOC);
 
                                 foreach($slr as $slrs){
                                     $slrs["hash"];
