@@ -122,7 +122,7 @@
 
         <form action="" method="POST">
             <input class="inp" type="text" name="fname" pattern="[a-zA-Z]{1,}" placeholder="First Name" autocomplete="off" required>
-            <input class="inp" type="text" name="lname" pattern="[a-zA-Z]{1,}" placeholder="Last Name" autocomplete="off" required>
+            <input class="inp" type="text" name="lname" pattern="[a-zA-Z\s]{1,}" placeholder="Middle and Last Name" autocomplete="off" required>
 
             <br>
             <br>
@@ -149,19 +149,19 @@
 
             <br>
             <br>
-            <input class="inp" type="text" name="parent" pattern="[a-zA-Z]{1,}" placeholder="parent name" autocomplete="off" required>
+            <input class="inp" type="text" name="parent" pattern="[a-zA-Z\s]{1,}" placeholder="parent name" autocomplete="off" required>
 
             <br>
             <br>
-            <input class="inp" type="text" name="hname" pattern="[a-zA-Z]{1,}" placeholder="House Name" autocomplete="off" required>
+            <input class="inp" type="text" name="hname" pattern="[a-zA-Z\s]{1,}" placeholder="House Name" autocomplete="off" required>
 
             <br>
             <br>
-            <input class="inp" type="text" name="village" pattern="[a-zA-Z]{1,}" placeholder="Village" autocomplete="off" required>
+            <input class="inp" type="text" name="village" pattern="[a-zA-Z\s]{1,}" placeholder="Village" autocomplete="off" required>
         
             <br>
             <br>
-            <input class="inp" type="text" name="city" pattern="[a-zA-Z]{1,}" placeholder="City" autocomplete="off" required>
+            <input class="inp" type="text" name="city" pattern="[a-zA-Z\s]{1,}" placeholder="City" autocomplete="off" required>
 
             <br>
             <br>
