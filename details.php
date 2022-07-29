@@ -184,7 +184,7 @@
                 }
 
 
-            if($day == 'Friday'){
+            if($day == 'Sunday'){
                 $sql = mysqli_query($conn,"select uid from user");
                 $uids = mysqli_fetch_all($sql,MYSQLI_ASSOC);
                 foreach($uids as $duids){
