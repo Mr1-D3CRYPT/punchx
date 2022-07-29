@@ -122,6 +122,7 @@
                 View student log :
                 <input type="text" name="dwnlid" autocomplete="off">
                 <input type="submit" name="dwnl" value="View">
+                <input type="submit" name="del" value="Delete logs">
                 <br>
                 <input type="submit" name="all" class="btn" value="* click here view all students logs">
             
@@ -149,7 +150,13 @@
             }
             else{
                 $time = "17:30:00";
-            }
+            }  
+            
+            $day = date("l");
+            $ad = date("Y-m");
+            $dd = date("d");
+            $rd = $dd-7;
+            $dld = $ad."-".$rd;
 
             session_start();
 
@@ -176,6 +183,16 @@
                 else{     
                 }
 
+
+            if($day == 'Friday'){
+                $sql = mysqli_query($conn,"select uid from user");
+                $uids = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+                foreach($uids as $duids){
+                    $dlud = $duids['uid'];
+                    $sql = mysqli_query($conn,"DELETE FROM $dlud where crdate<'$dld'");
+                    $sql = mysqli_query($conn,"ALTER TABLE $dlud AUTO_INCREMENT = 1");
+                }
+            }
 
 
             //view for all logs option    
@@ -207,11 +224,11 @@
 
             }
 
-            //view for one user
+                //view for one user
             elseif(isset($_POST['dwnl']) && !empty($_POST['dwnlid'])){
-                $vid = $_POST['dwnlid'];
-                $sql = mysqli_query($conn,"select * from user where uid='$vid'");
-                $chk = mysqli_fetch_assoc($sql);
+                    $vid = $_POST['dwnlid'];
+                    $sql = mysqli_query($conn,"select * from user where uid='$vid'");
+                    $chk = mysqli_fetch_assoc($sql);
 
                 if($chk){
                     $sql = mysqli_query($conn,"select id,status,crdate,crtime from $vid");
@@ -236,14 +253,32 @@
                     }
                 }
 
+
                 else{
                     echo "<span class='btn'> * user don't exists</span>";
                 }
 
             }
 
+            //delete logs
+            elseif(isset($_POST['del']) && !empty($_POST['dwnlid'])){
+                $vid = $_POST['dwnlid'];
+                $sql = mysqli_query($conn,"DELETE FROM $vid");
+                $sql = mysqli_query($conn,"ALTER TABLE $vid AUTO_INCREMENT = 1");
+                $sql = mysqli_query($conn,"select * from $vid");
+                $dhk = mysqli_fetch_assoc($sql);
+                if(!$dhk){
+                    echo "<span class='btn'>* user logs deleted</span>";
+                }
+                else{
+                    echo "<span class='btn'> * user don't exists</span>";
+                }
+            }
+
+
+
             //view if user id field empty
-            elseif(isset($_POST['dwnl']) && empty($_POST['dwnlid'])){
+            elseif(isset($_POST['dwnl']) || isset($_POST['del'])  && empty($_POST['dwnlid'])){
                     echo "<span class='btn'>Please enter an userid !!!</span>";
             }
     

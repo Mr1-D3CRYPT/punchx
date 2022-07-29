@@ -214,11 +214,10 @@
                 echo "Opps !!!";
             }
             else{
-                echo "your page should redirect automatically !! Else <a href='user.php'>click here</a>";
                 header("Location:user.php");
-                exit();
+                echo "<br>Your page should redirect automatically !! Else <a href='user.php'>click here</a>";
+                exit;
             }
-            session_destroy();
         }
 
 
