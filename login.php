@@ -89,7 +89,7 @@
             </fieldset>
 
             <br>
-            <input class="inp" type="text" name="username" placeholder="Username" required>
+            <input class="inp" type="text" name="username" autofocus placeholder="Username" required>
             <br>
 
             <br>

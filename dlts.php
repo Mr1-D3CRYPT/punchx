@@ -203,7 +203,7 @@
             </fieldset>
 
             <br>
-            <input class="inp" type="text" name="username" placeholder="Userid" autocomplete="off" required>
+            <input class="inp" type="text" name="username" autofocus placeholder="Userid" autocomplete="off" required>
             
 
             <?php

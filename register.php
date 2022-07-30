@@ -200,7 +200,7 @@ session_destroy();
             </fieldset>
 
             <br>
-            <input class="inp" type="text" name="userid" pattern="(?=.*[a-z]).{1,}" placeholder="Userid" autocomplete="off" title="Must contain atleast one character" required>
+            <input class="inp" type="text" name="userid" pattern="(?=.*[a-z]).{1,}" placeholder="Userid" autocomplete="off" autofocus title="Must contain atleast one character" required>
             
             <br>
             <br>

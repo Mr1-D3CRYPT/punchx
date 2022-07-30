@@ -121,7 +121,7 @@
     ?>
 
         <form action="" method="POST">
-            <input class="inp" type="text" name="fname" pattern="[a-zA-Z]{1,}" placeholder="First Name" autocomplete="off" required>
+            <input class="inp" type="text" name="fname" autofocus pattern="[a-zA-Z]{1,}" placeholder="First Name" autocomplete="off" required>
             <input class="inp" type="text" name="lname" pattern="[a-zA-Z\s]{1,}" placeholder="Middle and Last Name" autocomplete="off" required>
 
             <br>
