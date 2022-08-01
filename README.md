@@ -1,4 +1,8 @@
 # punchx
+
+A LAMPP FULL STACK PROJECT
+
+
 Punchx is a web version of the punchin and punchout system we use in offices
 
 The user has an option of one time one device loggin. If he/she want to loggin from another device, they may have to contact the admin who has the previlage to re register the device set to the account.
