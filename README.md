@@ -1,6 +1,6 @@
 # punchx
 
-A LAMPP FULL STACK PROJECT
+A LAMP FULL STACK PROJECT
 
 
 Punchx is a web version of the punchin and punchout system we use in offices
