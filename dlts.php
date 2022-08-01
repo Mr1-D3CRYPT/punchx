@@ -1,5 +1,5 @@
 <?php
-
+    //checking the admin name and pass at the beggining for sec+
     session_start();
 
     //setting the variables
@@ -28,11 +28,9 @@
 
 
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -53,7 +51,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"> 
   
     <style>
-        /*Forum sizing and so on*/
+        /*Forum sizing*/
         .frm{
             position : relative;
             overflow : hidden;
@@ -64,7 +62,7 @@
             padding : 3%;
             
         }
-        /*To validate the screen size for the form width*/
+        /*Setting the screen size*/
         @media screen and (max-width : 540px) {
             .frm {
                 width : 60%;
@@ -87,9 +85,10 @@
                 left:-20%;
             }
         }
-        </style>
+    </style>
 
-    <!--Style for the page-->
+
+    <!--Style for the rest of the page-->
     <style>
         .head1{
         font-family : 'Alegreya Sans SC';
@@ -165,10 +164,9 @@
             display: inline;
         }
     </style>
-    
-
 
 </head>
+
 
 
 
@@ -182,7 +180,7 @@
 
     
 
-    <!--Menu bar-->
+    <!--Logo-->
     <div class="navbar">
         <a class="navbars" href="punchedout.php" >Punched out</a>
         <a class="navbars" href="punchedin.php" >Punched in</a>
@@ -195,6 +193,7 @@
     <br>
     
     
+    <!--Page form--> 
     <div>
         <form action="" method="POST" class="frm">
 
@@ -206,6 +205,7 @@
             <input class="inp" type="text" name="username" autofocus placeholder="Userid" autocomplete="off" required>
             
 
+
             <?php
 
                     session_start();
@@ -213,7 +213,7 @@
                     //setting the variables
                     $_SESSION['username']=$_POST['username'];
 
-                    //validating the session variables
+                    //if the delete is clicked
                     if (isset($_POST['delete'])){
                         if($_SERVER['REQUEST_METHOD']==='POST'){
 
@@ -227,6 +227,7 @@
 
                             $drow = mysqli_fetch_assoc($sql);
 
+                            //deleting user if the uid exists
                             if(!$drow){
                                 echo "<p class='outf'>* user dont exists</p>";   
                             }   
@@ -239,6 +240,8 @@
                             }
                         }
                     }
+
+                    //if re register is clicked
                     if (isset($_POST['rereg'])){
                         if($_SERVER['REQUEST_METHOD']==='POST'){
 
@@ -254,6 +257,7 @@
                             $drow = mysqli_fetch_assoc($sql);
 
 
+                            //re registering if the uid exists
                             if(!$drow){
                                 echo "<p class='outs'>* user dont exists</p>";   
                             }   
@@ -276,16 +280,16 @@
                         }
                     }
             ?>
-
-
             <br>
             <br>
+
             
             <input type="submit" value="Delete user" name="delete">
             <input type="submit" value="Reregister" name="rereg">
+            <br>
+            <br>
 
-            <br>
-            <br>
+            <!-- displaying the option details -->
             <p>* select delete user to delete the user and Reregister to allow login from a new device</p>
 
         </form>
@@ -294,11 +298,12 @@
 
 
     <!--copyright footer-->
-    <br><br>
+    <br>
+    <br>
     <div>
-    <a href="https://github.com/Mr1-D3CRYPT" target="_blank" style="text-decoration:none">
-    <h5 style="margin:10%;font-family: Cardo;font-size: small;position: relative;">© 2022 PUNCHX</h5>
-    </a>
+        <a href="https://github.com/Mr1-D3CRYPT" target="_blank" style="text-decoration:none">
+            <h5 style="margin:10%;font-family: Cardo;font-size: small;position: relative;">© 2022 PUNCHX</h5>
+        </a>
     </div>
 
 </body>

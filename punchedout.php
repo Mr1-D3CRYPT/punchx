@@ -53,6 +53,7 @@
 
     <!--Style-->
     <style>
+        
         .head1{
         font-family : 'Alegreya Sans SC';
         font-size : 300%;
@@ -127,8 +128,8 @@
             text-decoration: none;
             color: red;
         }
+
     </style>
-    
 
 
 </head>
@@ -137,7 +138,7 @@
 
 <body>
 
-    <!--header-->
+    <!--Logo Header-->
     <div class="container-fluid p-5">
         <h3 class="head1 shadow">PUNCH<span class="head2">X</span>
         </h3>
@@ -205,11 +206,13 @@
 
 
     <!--copyright footer-->
-    <br><br><br>
+    <br>
+    <br>
+    <br>
     <div>
-    <a href="https://github.com/Mr1-D3CRYPT" target="_blank">
-    <h5 style="margin:10%;margin-top:15%;font-family: Cardo;font-size: small;position: absolute;">© 2022 PUNCHX</h5>
-    </a>
+        <a href="https://github.com/Mr1-D3CRYPT" target="_blank">
+            <h5 style="margin:10%;margin-top:15%;font-family: Cardo;font-size: small;position: absolute;">© 2022 PUNCHX</h5>
+        </a>
     </div>
 
 </body>

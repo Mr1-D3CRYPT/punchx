@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-<!--Head of the page-->
 <head>
 
 
@@ -35,7 +33,7 @@
 
 
 
-<!--styling the api stuffs-->
+<!--Logo style-->
 <style>
 
    .head1{
@@ -71,7 +69,7 @@
 <!--Body of the page-->
 <body>
     
-    <!--The login page's top logo-->
+    <!--Logo-->
     <div class="container-fluid p-5">
         <h3 class="head1 shadow">PUNCH<span class="head2">X</span>
         </h3>
@@ -81,6 +79,7 @@
 
     <!--The form part-->
     <div>
+
         <form action="" method="POST" class="frm">
             <fieldset>
                 <legend>
@@ -140,6 +139,7 @@
                             $row = mysqli_fetch_all($sql);
 
                             if($row){
+                                //creating the fingerprint
                                 if($crows["hash"] == 0){
                                     $n = rand(9990000,999999999999999);
                                     $ck_has = md5($n);
@@ -150,11 +150,13 @@
                                     header("Location:registeruser.php");
                                 }
 
+                                //cheking hash if its zero
                                 elseif($crows["hash"]===$ck_has){
                                     setcookie("userid",$uname,2147483647);
                                     setcookie("upasswd",$upass,2147483647);
                                     header("Location:registeruser.php");
                                 }
+
                                 else{
                                     echo "<p class='log'>* please login from your own device. Contact your admin if the problem still continues.<p>";
                                     echo "<br>"; 
@@ -180,7 +182,7 @@
     <!--copyright footer-->
     <div>
         <a href="https://github.com/Mr1-D3CRYPT" target="_blank">
-        <h5 style="margin:10%;margin-top:15%;font-family: Cardo;font-size: small;position: absolute;">© 2022 PUNCHX</h5>
+            <h5 style="margin:10%;margin-top:15%;font-family: Cardo;font-size: small;position: absolute;">© 2022 PUNCHX</h5>
         </a>
     </div>
 

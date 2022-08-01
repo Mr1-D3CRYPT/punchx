@@ -1,26 +1,26 @@
 <?php
+    //validation for the user page
 
+    //checking if the cookies are set and the values are correct. Else it will be redirected to login page
+    if(isset($_COOKIE['uhash'])){
+        session_start();
 
+        $conn = mysqli_connect("localhost","root","","punchx");
 
-if(isset($_COOKIE['uhash'])){
-    session_start();
+        //setting the variables
+        $_SESSION['username']=$_COOKIE['userid'];
+        $_SESSION['userpassword']=$_COOKIE['upasswd'];
 
-    $conn = mysqli_connect("localhost","root","","punchx");
+        $uname = $_SESSION['username'];
+        $upassword = $_SESSION['userpassword'];
 
-    //setting the variables
-    $_SESSION['username']=$_COOKIE['userid'];
-    $_SESSION['userpassword']=$_COOKIE['upasswd'];
+        $sql = mysqli_query($conn,"select fname from user where uid='$uname'");
 
-    $uname = $_SESSION['username'];
-    $upassword = $_SESSION['userpassword'];
+        $nm = mysqli_fetch_all($sql,MYSQLI_ASSOC);
 
-    $sql = mysqli_query($conn,"select fname from user where uid='$uname'");
-
-    $nm = mysqli_fetch_all($sql,MYSQLI_ASSOC);
-
-    foreach($nm as $nms){
-        $nmv = $nms["fname"];
-    } 
+        foreach($nm as $nms){
+            $nmv = $nms["fname"];
+        } 
 
         $sql = mysqli_query($conn,"select hash from user where uid='$uname'");
 
@@ -40,7 +40,7 @@ if(isset($_COOKIE['uhash'])){
 
         $_SESSION['hash']=$_COOKIE['uhash'];
         $uhsh = $_SESSION['hash'];
-        
+            
 
         //conecting to the server     
         $sql = mysqli_query($conn,"select * from user where uid='$uname' AND password='$upassword' AND hash='$uhsh'");
@@ -63,11 +63,11 @@ if(isset($_COOKIE['uhash'])){
                 $sql=mysqli_multi_query($conn,"update user set status='in' where uid='$uname'");
             }
         }
-    
-}
-else{   
-    header("Location:login.php");
-}
+        
+    }
+    else{   
+        header("Location:login.php");
+    }
 
 ?>
 
@@ -95,8 +95,6 @@ else{
     <!--Including bootstrap to the page-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"> 
   
- 
-    
     
     <!--Style-->
     <style>
@@ -124,10 +122,7 @@ else{
             color: green;
         }
 
-
-
     </style>
-    
 
 </head>
 
@@ -218,9 +213,9 @@ else{
 
     <!--copyright footer-->
     <div>
-    <a href="https://github.com/Mr1-D3CRYPT" target="_blank">
-    <h5 style="margin:10%;margin-top:15%;font-family: Cardo;font-size: small;position: absolute;">© 2022 PUNCHX</h5>
-    </a>
+        <a href="https://github.com/Mr1-D3CRYPT" target="_blank">
+            <h5 style="margin:10%;margin-top:15%;font-family: Cardo;font-size: small;position: absolute;">© 2022 PUNCHX</h5>
+        </a>
     </div>
 
 </body>

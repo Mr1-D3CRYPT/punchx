@@ -1,6 +1,5 @@
 <?php
-
-
+    //registeration page for the user
     if(isset($_COOKIE['uhash'])){
         session_start();
 
@@ -58,8 +57,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"> 
   
  
-    
-    
     <!--Style-->
     <style>
         .btnstl{
@@ -93,6 +90,7 @@
 
 <body>
 
+    <!--Logo Header-->
     <div class="container-fluid p-5">
         <h3 class="head1 shadow">PUNCH<span class="head2">X</span>
         </h3>
@@ -100,25 +98,25 @@
     <br>
     <br>
     
+
     <div style="text-align:center">
-       
-    
-    <?php
-
-        $sql = mysqli_query($conn,"select fname from user where uid='$uname'");
-        $reg = mysqli_fetch_all($sql,MYSQLI_ASSOC);
         
-        foreach($reg as $regs){
-            $nm = $regs['fname'];
-        }
-        if($nm!=0){
-            header("Location:user.php");
-        }
-        else{
-        }
-        
+        <?php
 
-    ?>
+            $sql = mysqli_query($conn,"select fname from user where uid='$uname'");
+            $reg = mysqli_fetch_all($sql,MYSQLI_ASSOC);
+            
+            foreach($reg as $regs){
+                $nm = $regs['fname'];
+            }
+            if($nm!=0){
+                header("Location:user.php");
+            }
+            else{
+            }
+            
+
+        ?>
 
         <form action="" method="POST">
             <input class="inp" type="text" name="fname" autofocus pattern="[a-zA-Z]{1,}" placeholder="First Name" autocomplete="off" required>
@@ -182,8 +180,7 @@
 
     <?php
 
-
-        if(isset($_POST['register'])){
+         if(isset($_POST['register'])){
 
             session_start();
 
@@ -200,6 +197,7 @@
             $pcontact=$_POST['pcontact'];
             $mail=$_POST['mail'];
 
+            //entering the values to the database
             $sql = mysqli_query($conn,"update user set fname='$firstname',lname='$lastname',batch='$batch',
             contact='$contact',parent='$parent',house='$hname',village='$village',city='$city',
             pin='$pin',pcontact='$pcontact',mail='$mail' where uid='$uname'");
@@ -220,7 +218,6 @@
             }
         }
 
-
     ?>
 
     </div>
@@ -229,9 +226,9 @@
 
     <!--copyright footer-->
     <div>
-    <a href="https://github.com/Mr1-D3CRYPT" target="_blank">
-    <h5 style="margin:10%;margin-top:15%;font-family: Cardo;font-size: small;position: absolute;">© 2022 PUNCHX</h5>
-    </a>
+        <a href="https://github.com/Mr1-D3CRYPT" target="_blank">
+            <h5 style="margin:10%;margin-top:15%;font-family: Cardo;font-size: small;position: absolute;">© 2022 PUNCHX</h5>
+        </a>
     </div>
 
 </body>

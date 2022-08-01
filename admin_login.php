@@ -2,8 +2,6 @@
 <html lang="en">
 
 
-
-
 <!--Head of the page-->
 <head>
 
@@ -31,52 +29,45 @@
     <title>PunchX</title>
 
 
+        <!--styling the api stuffs-->
+        <style>
+
+            .head1{
+                font-family : 'Alegreya Sans SC';
+                font-size : 300%;
+                background-color : #fbfbfb;
+                color :black;
+            }
+            .head2{
+                font-family : 'Great Vibes';
+                background-color : #fbfbfb;
+                color : black
+            }
+            .inp{
+            border-left-width: 3px;
+            border-bottom-color: black;
+            border-top-style: hidden;
+            border-right-style: hidden;
+            border-left-style: hidden ;
+            border-bottom-style: groove;
+            outline:none;
+            resize:none;
+            }
+            .log{
+                color: red;
+                display: inline;
+            }
+
+        </style>
+
 </head>
-
-
-
-
-
-<!--styling the api stuffs-->
-<style>
-
-   .head1{
-        font-family : 'Alegreya Sans SC';
-        font-size : 300%;
-        background-color : #fbfbfb;
-        color :black;
-    }
-    .head2{
-        font-family : 'Great Vibes';
-        background-color : #fbfbfb;
-        color : black
-    }
-    .inp{
-    border-left-width: 3px;
-    border-bottom-color: black;
-    border-top-style: hidden;
-    border-right-style: hidden;
-    border-left-style: hidden ;
-    border-bottom-style: groove;
-    outline:none;
-    resize:none;
-    }
-    .log{
-        color: red;
-        display: inline;
-    }
-
-</style>
-
-
-
 
 
 
 <!--Body of the page-->
 <body>
     
-    <!--The login page's top logo-->
+    <!--Logo-->
     <div class="container-fluid  p-5">
         <h3 class="head1 shadow">PUNCH<span class="head2">X</span>
         </h3>
@@ -84,7 +75,8 @@
     <br>
     <br>
 
-    <!--The form part-->
+
+    <!--Login form html-->
     <div>
         <form action="" method="POST" class="frm">
 
@@ -101,7 +93,8 @@
             <br>
             <br>
             
-
+            
+            <!--Including php for validation-->
             <?php
 
                 session_start();
@@ -124,17 +117,20 @@
                         $con = mysqli_connect("localhost","root","","punchx");
 
 
-                        //validating it
+                        //hashing the password
                         $pass = md5($password);
 
 
+                        //checking admin uname and password in the database
                         $sql = mysqli_query($con,"select * from admin where username='$name' AND password='$pass'");
 
                         $row = mysqli_fetch_assoc($sql);
 
+                        //setting the admin cookie
                         setcookie("aname",$name,2147483647);
                         setcookie("apass",$pass,2147483647);
                                         
+                        //verifying the login
                         if(!$row){
                             echo '<p class="log">* please enter the correct username and password</p>'; 
                             echo "<br>"; 
@@ -159,10 +155,11 @@
     <br>
 
 
+
     <!--copyright footer-->
     <div>
         <a href="https://github.com/Mr1-D3CRYPT" target="_blank">
-        <h5 style="margin:10%;margin-top:15%;font-family: Cardo;font-size: small;position: absolute;">© 2022 PUNCHX</h5>
+            <h5 style="margin:10%;margin-top:15%;font-family: Cardo;font-size: small;position: absolute;">© 2022 PUNCHX</h5>
         </a>
     </div>
 

@@ -131,15 +131,13 @@
         }
     </style>
     
-
-
 </head>
 
 
 
 <body>
 
-    <!--header-->
+    <!--Logo-->
     <div class="container-fluid p-5">
         <h3 class="head1 shadow">PUNCH<span class="head2">X</span>
         </h3>
@@ -175,6 +173,7 @@
 
             $i=0;
 
+            //printing the user ids
             if($result){
                 foreach($result as $results){
                     $i++;
@@ -193,11 +192,13 @@
                 }
                 echo " users are punched in.";
 
+                //for the show details option
                 echo "<br>";
                 echo "<br>";
                 echo "<a href='details.php' target='_blank' class='punch'>* click here show details</a>";
             }
 
+            //if no users present
             else{
                 echo "Sorry! No user punched in";
             }
@@ -208,11 +209,13 @@
     </div>
 
     <!--copyright footer-->
-    <br><br><br>
+    <br>
+    <br>
+    <br>
     <div>
-    <a href="https://github.com/Mr1-D3CRYPT" target="_blank">
-    <h5 style="margin:10%;margin-top:15%;font-family: Cardo;font-size: small;position: absolute;">© 2022 PUNCHX</h5>
-    </a>
+        <a href="https://github.com/Mr1-D3CRYPT" target="_blank">
+            <h5 style="margin:10%;margin-top:15%;font-family: Cardo;font-size: small;position: absolute;">© 2022 PUNCHX</h5>
+        </a>
     </div>
 
 </body>

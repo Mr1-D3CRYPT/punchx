@@ -49,7 +49,8 @@ session_destroy();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"> 
   
     <style>
-        /*Forum sizing and so on*/
+        
+        /*Forum sizing*/
         .frm{
             position : relative;
             overflow : hidden;
@@ -83,10 +84,13 @@ session_destroy();
                 left:-20%;
             }
         }
-        </style>
+
+    </style>
+
 
     <!--Style for the page-->
     <style>
+
         .head1{
         font-family : 'Alegreya Sans SC';
         font-size : 300%;
@@ -161,6 +165,7 @@ session_destroy();
             display: block;
             color: red;
         }
+
     </style>
     
 
@@ -227,8 +232,7 @@ session_destroy();
 
                             $rrow = mysqli_fetch_assoc($sql);
 
-
-
+                            //registering if not exists
                             if(!$rrow){
                                 $sql = mysqli_query($conn,"insert into user(uid,password) values('$uid','$upass')");
                                 if($sql){
@@ -237,6 +241,7 @@ session_destroy();
                                     echo "<br>";           
                                 }
                             }
+                            //display if user exists
                             else{
                                 echo "<p class='rgf'>* user already exists</p>"; 
                             }
@@ -252,11 +257,12 @@ session_destroy();
 
 
     <!--copyright footer-->
-    <br><br>
+    <br>
+    <br>
     <div>
-    <a href="https://github.com/Mr1-D3CRYPT" target="_blank" style="text-decoration:none">
-    <h5 style="margin:10%;font-family: Cardo;font-size: small;position: relative;">© 2022 PUNCHX</h5>
-    </a>
+        <a href="https://github.com/Mr1-D3CRYPT" target="_blank" style="text-decoration:none">
+            <h5 style="margin:10%;font-family: Cardo;font-size: small;position: relative;">© 2022 PUNCHX</h5>
+        </a>
     </div>
 
 </body>
